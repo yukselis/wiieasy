@@ -1,0 +1,17 @@
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\obj\Debug\Dalowe.Data.Entity.csprojAssemblyReference.cache
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\obj\Debug\Dalowe.Data.Entity.csproj.CoreCompileInputs.cache
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\Dalowe.Data.Entity.dll.config
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\Dalowe.Data.Entity.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\Dalowe.Data.Entity.pdb
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\Dalowe.Data.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\Dalowe.Domain.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\EntityFramework.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\EntityFramework.SqlServer.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\Dalowe.Data.pdb
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\Dalowe.Domain.pdb
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\Dalowe.Domain.dll.config
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\EntityFramework.xml
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\bin\Debug\EntityFramework.SqlServer.xml
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\obj\Debug\Dalowe.Data.Entity.csproj.CopyComplete
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\obj\Debug\Dalowe.Data.Entity.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Data.Entity\obj\Debug\Dalowe.Data.Entity.pdb

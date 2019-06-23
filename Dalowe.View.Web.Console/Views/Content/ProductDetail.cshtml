@@ -1,0 +1,72 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.ProductModel
+@{
+                /**/
+
+                string cdnUrl = ConfigurationManager.CdnUrl;
+                string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles
+{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload-ui.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload.css?@version" />
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <div class="caption">@(Model.IsNew ? "Yeni ürün oluştur" : Model.Name)</div>
+                </div>
+                <div class="portlet-body col-md-12">
+                    @using (Html.BeginForm("ProductDetail", "Content", null, FormMethod.Post, new { @class = "form-horizontal", @id = "page-detail-form", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-body pal">
+                            <div class="col-md-9 col-xs-12">
+                                @Html.StatusFor(model => model.StatusID)
+                                @Html.TextFieldFor(model => model.Name)
+                                @Html.RichTextFieldFor(model => model.Description)
+                                @Html.TextFieldFor(model => model.City)
+                                @Html.TextFieldFor(model => model.Code)
+                                @Html.TextFieldFor(model => model.County)
+                                @Html.HiddenFor(model => model.DimensionX)
+                                @Html.HiddenFor(model => model.DimensionY)
+                                @Html.TextFieldFor(model => model.Latitude)
+                                @Html.TextFieldFor(model => model.Longtitude)
+                                @Html.TextFieldFor(model => model.Province)
+                                @Html.TextFieldFor(model => model.PriceAmount)
+                                @Html.PriceRangeFor(model => model.PriceRange)
+                                @Html.ProductTypeFor(model => model.Type)
+                                @if (!Model.IsNew)
+                                {
+                                    <text>@Html.HistoryPanelFor(model => model.History)</text>
+                                }
+                                @Html.HiddenFor(model => model.RowGuid)
+                                @Html.HiddenFor(model => model.ID)
+                                @Html.ActionButtonsFor()
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script src="@(cdnUrl)js/jquery.validate.unobtrusive.js?@version"></script>
+    <script src="@(cdnUrl)vendors/moment/moment.js?@version"></script>
+    <script>
+                //KindEditor.ready(function (K) {
+                //    var options = {
+                //        uploadJson: '../Files/vendors/kindeditor/asp.net/upload_json.ashx',
+                //        fileManagerJson: '../Files/vendors/kindeditor/asp.net/file_manager_json.ashx',
+                //        allowFileManager: true
+                //    };
+                //    window.editor = K.create('#Description');
+                //});
+    </script>
+}

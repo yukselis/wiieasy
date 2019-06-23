@@ -1,0 +1,82 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Console.Models.ViewProfileModel
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles
+{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload-ui.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload.css?@version" />
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-body col-md-12 col-lg-12 col-xs-12">
+                    <ul class="nav nav-tabs" id="user-profile-tabs">
+                        <li class="active"><a class="active" data-toggle="tab" href="#profile"><i class="fa fa-users"></i>&nbsp;&nbsp;Profil Bilgileri</a></li>
+                        @*<li><a data-toggle="tab" href="#change-password"><i class="fa fa-unlock-alt"></i>&nbsp;&nbsp;Şifre Değiştirme</a></li>*@
+                    </ul>
+                    <div class="tab-content col-md-12 col-xs-12 col-lg-12" id="user-profile-tab-contents">
+                        <div class="tab-pane fade active in" id="profile">
+                            @using (Html.BeginForm("ViewProfile", "Account", null, FormMethod.Post, new { @class = "form-horizontal", @id = "view-profile-form", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-body pal">
+                                    @Html.ValidationSummary(true)
+                                    @*<div class="col-md-2 col-md-offset-2 col-xs-12 col-xs-offset-0">
+                                        @Html.ImageUploadFieldFor(model => model.ProfileImagePath, circleImage: true, borderedImage:true)
+                                    </div>*@
+                                    <div class="col-md-8 col-xs-12">
+                                        @Html.TextFieldFor(model => model.Name)
+                                        @Html.TextFieldFor(model => model.Email)
+                                        @Html.HiddenFor(model => model.ID)
+                                        <div class="form-actions col-md-10">
+                                            <button type="submit" name="UpdateProfile" id="update-profile" class="btn-press gray pull-right mls">
+                                                <span>
+                                                    Kaydet
+                                                    &nbsp;<i class="fa fa-save"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        @*<div class="tab-pane" id="change-password">
+                            @using (Html.BeginForm("ChangePassword", "Account", null, FormMethod.Post, new { @class = "form-horizontal", @id = "change-password-form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-body pal">
+                                    @Html.ValidationSummary(true)
+                                    <div class="col-md-10">
+                                        @Html.PasswordFieldFor(model => model.PasswordModel.OldPassword, new { @class = "sensitive-data" })
+                                        @Html.PasswordFieldFor(model => model.PasswordModel.NewPassword)
+                                        @Html.PasswordFieldFor(model => model.PasswordModel.ConfirmPassword)
+                                        <div class="form-actions col-md-10">
+                                            <button type="submit" name="ChangePassword" id="change-password" class="btn-press gray pull-right mls">
+                                                <span>
+                                                    <i class="fa fa-key">&nbsp;</i>Şifre Değiştir
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script src="@(cdnUrl)js/jquery.validate.unobtrusive.js?@version"></script>
+}
+
+

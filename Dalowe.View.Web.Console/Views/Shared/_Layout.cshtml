@@ -1,0 +1,102 @@
+﻿@using Arwend
+@using Dalowe.View.Web.Framework.Helpers
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+
+
+@model Arwend.Web.View.Mvc.Models.Base.BaseModel
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="@ConfigurationManager.Language" lang="@ConfigurationManager.Language">
+<head>
+    <title>@(ViewBag.Title ?? "Genel Bakış") | Ege Medya Yönetim Paneli</title>
+    <base href="@ConfigurationManager.DomainUrl" />
+    <meta content="@ConfigurationManager.Language" http-equiv="content-language" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1254" />
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-9" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta content="text/html; charset=x-mac-turkish" http-equiv="content-type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="generator" content="@ConfigurationManager.CompanyInfo" />
+    <meta name="copyright" content="@DateTime.Now.Year © Copyright @ConfigurationManager.CompanyInfo" />
+    <meta name="author" content="@ConfigurationManager.CompanyInfo" />
+    <meta name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=1.0, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="icon" href="@(cdnUrl)images/favicon.ico" sizes="16x16" />
+    <link rel="shortcut icon" href="@(cdnUrl)images/favicon.ico" type="image/x-icon" sizes="16x16" />
+    <link rel="fluid-icon" href="@(cdnUrl)images/favicon.ico" title="Ege Medya Yönetim Paneli" />
+    <link rel="logo" type="image/svg" href="@(cdnUrl)images/logo.png" />
+
+    @*<link rel="apple-touch-startup-image" href="img/splash.png" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />*@
+    <link rel="apple-touch-icon" href="@(cdnUrl)images/apple-touch/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="@(cdnUrl)images/apple-touch/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="@(cdnUrl)images/apple-touch/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="@(cdnUrl)images/apple-touch/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="@(cdnUrl)images/apple-touch/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="@(cdnUrl)images/apple-touch/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="@(cdnUrl)images/apple-touch/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="@(cdnUrl)images/apple-touch/apple-touch-icon-152x152.png" />
+    @RenderSection("metatags", required: false)
+    @* @Styles.Render("~/bundles/css")*@
+
+    <link type="text/css" rel="stylesheet" async href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800" />
+    <link type="text/css" rel="stylesheet" async href="https://fonts.googleapis.com/css?family=Oswald:400,300,700&subset=latin,latin-ext" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-ui-1.11.4.custom/themes/smoothness/jquery-ui.min.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/font-awesome/css/font-awesome.min.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/bootstrap/css/bootstrap.min.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)css/digiturk-support-console.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)css/themes/gray.css?@version" id="color-style" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)css/style-responsive.css?@version" />
+    @RenderSection("styles", required: false)
+</head>
+<body class="full-strech-background">
+    <div>
+        <a id="totop" href="#" title="Sayfa başına dön"><i class="fa fa-angle-up"></i></a>
+        <div id="wrapper">
+            @{Html.RenderAction("Header", "Layout");}
+            @{Html.RenderAction("LeftMenu", "Layout");}
+            <div id="page-wrapper">
+                @Html.Breadcrumbs()
+                @RenderBody()
+                @{Html.RenderAction("Footer", "Layout");}
+            </div>
+        </div>
+    </div>
+    @Html.ModalFor("Information")
+    @Html.ModalFor("Confirmation")
+    @Html.ModalFor("Gallery")
+
+    @* @Scripts.Render("~/bundles/jquery")*@
+    <script src="@(cdnUrl)js/jquery-1.11.0.min.js?@version"></script>
+    <script src="@(cdnUrl)js/jquery-migrate-1.2.1.min.js?@version"></script>
+    <script src="@(cdnUrl)vendors/jquery-ui-1.11.4.custom/jquery-ui.js?@version"></script>
+    <script src="@(cdnUrl)vendors/bootstrap/js/bootstrap.min.js?@version"></script>
+    <script src="@(cdnUrl)vendors/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js?@version"></script>
+    <script src="@(cdnUrl)js/html5shiv.js?@version"></script>
+    <script src="@(cdnUrl)js/respond.min.js?@version"></script>
+    <script src="@(cdnUrl)vendors/metisMenu/jquery.metisMenu.js?@version"></script>
+    <script src="@(cdnUrl)vendors/slimScroll/jquery.slimscroll.min.js?@version"></script>
+    <script src="@(cdnUrl)vendors/jquery-cookie/jquery.cookie.min.js?@version"></script>
+    <script src="@(cdnUrl)vendors/jquery-pace/pace.min.js?@version"></script>
+    <script src="@(cdnUrl)vendors/bootstrap-switch/js/bootstrap-switch.min.js?@version"></script>
+    <script src="@(cdnUrl)vendors/sweet-alert/sweetalert.min.js?@version"></script>
+    <script src="@(cdnUrl)js/arwend/arwend-tr-1.0.1.js?@version"></script>
+    <script src="@(cdnUrl)js/digiturk-support-console.js?@version"></script>
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(function () {
+            @if (Model != null && Model.AlertMessage != null && !string.IsNullOrEmpty(Model.AlertMessage.Message)) {
+            <text>
+            alert("@Html.Raw(Model.AlertMessage.Caption)", "@Html.Raw(Model.AlertMessage.Message)", "@(Model.AlertMessage.HasError ? "error" : "")");
+            </text>
+        }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.OfferItemModel
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles
+{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload-ui.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload.css?@version" />
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <div class="caption">@(Model.IsNew ? "Yeni ürün oluştur" : Model.Description)</div>
+                </div>
+                <div class="portlet-body col-md-12">
+                    @using (Html.BeginForm("OfferItemDetail", "Content", null, FormMethod.Post, new { @class = "form-horizontal", @id = "page-detail-form", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <div class="form-body pal">
+                        @Html.ValidationSummary(true)
+                        <div class="col-md-8 col-xs-12">
+                            @Html.StatusFor(model => model.StatusID)
+                            @Html.RichTextFieldFor(model => model.Description)
+                            @Html.TextFieldFor(model => model.UnitPrice)
+                            @Html.DateRangeFieldFor("Tarih aralığı", m => m.StartTime, m => m.EndTime)
+                            @if (!Model.IsNew)
+                            {
+                                <text>@Html.HistoryPanelFor(model => model.History)</text>
+                            }
+                            @Html.HiddenFor(model => model.RowGuid)
+                            @Html.HiddenFor(model => model.ID)
+                            @Html.ActionButtonsFor()
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <div class="title col-md-12 col-xs-12">
+                                <b>Ürünler</b>
+                            </div>
+                                    
+                            <div id="subcategory-list" class="dd nestable-container col-md-12 col-xs-12" data-output="">
+                                <div class="text-center">
+                                    <div class="wait fixed-size"></div>
+                                    Ürünler yüklenirken lütfen bekleyiniz...
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script src="@(cdnUrl)js/jquery.validate.unobtrusive.js?@version"></script>
+    <script src="@(cdnUrl)vendors/moment/moment.js?@version"></script>
+    <script>
+        $(document).ready(function () {
+                var output;
+                var updateOutput = function (e) {
+                    var list = e.length ? e : $(e.target);
+                    output = list.data('output');
+                    if (window.JSON) {
+                        list.data('output', window.JSON.stringify(list.nestable('serialize')));
+                    } else {
+                        list.data('output', 'JSON browser support required for this demo.');
+                    }
+                };
+
+                $.Arwend.Ajax.Parameters = {
+                    Action: "getofferitemproducts",
+                    offeritem: '@Html.Encode(Model.ID)'
+                };
+                $.Arwend.Ajax.GetResponse(function (response) { LoadSubCategories(response); }, false, true);
+
+                function LoadSubCategories(data) {
+                    var content = "";
+                    if (data.length > 0) {
+                        var items = eval(data);
+                        if (items != null && items.length > 0) {
+                            content = "<ol class='dd-list'>";
+                            for (var i = 0; i < items.length; i++) {
+                                content += "<li data-sortorder='" + items[i].SortOrder + "' data-id='" + items[i].ID + "' data-status='" + (items[i].StatusID == 1 ? "active" : "passive") + "' title='" + (items[i].StatusID == 1 ? "Aktif" : "Pasif") + " durumda' class='dd-item dd3-item'>";
+                                //content += "<div class='dd-handle dd3-handle'></div>";
+                                content += "<button type='button' data-action='delete' title='Sil'>Sil</button>";
+                                content += "<div class='dd3-content'>";
+                                content += "<i class='fa fa-circle'></i><a class='nested-list-item' href='/content/productdetail/?id=" + items[i].ID + "'>" + items[i].Name + " - " + items[i].Type + "</a></div>";
+                                content += "</li>";
+                            }
+                            content += "</ol>";
+                            $('.nestable-container').html(content);   
+                            $('.nestable-container button[data-action="delete"]').on('click', function (e) {
+                                var currentItem = $(this).closest('li');
+                                var id = $(currentItem).data('id');
+                                if (id != null && id != 'undefined' && id > 0) {
+                                    swal({
+                                        title: "Silmek istediğinize emin misiniz?",
+                                        text: "Silme işlemini onaylarsanız bu kayıt kalıcı olarak silinecektir!",
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "Evet",
+                                        cancelButtonText: "Hayır",
+                                        closeOnConfirm: false,
+                                        closeOnCancel: true
+                                    },
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                $.Arwend.Ajax.Parameters = {
+                                                    Action: "deleteofferitemproduct",
+                                                    ID: id
+                                                };
+                                                $.Arwend.Ajax.GetResponse(function (response) {
+                                                    if (response.message.isNullOrEmpty()) {
+                                                        swal({ title: "Silindi!", text: "Silme işlemi başarıyla gerçekleştirildi.", type: "success", allowOutsideClick: true });
+                                                        var parentList = $(currentItem).closest('ol');
+                                                        if ($(parentList) != null && $(parentList).length > 0 && $(parentList).find("li").length <= 1) {
+                                                            $('button[data-action!="delete"]', $(parentList).parent()).remove();
+                                                            $(parentList).remove();
+                                                        }
+                                                        else
+                                                            $(currentItem).remove();
+                                                        if ($('.nestable-container li').length == 0)
+                                                            $('.nestable-container').html('<div class="text-center">Alt kategori tanımlı değil.</div>');
+                                                        else
+                                                            $('.nestable-container').nestable('reset');
+                                                    }
+                                                    else
+                                                        swal("Hata", response.message, "error");
+                                                });
+                                            }
+                                        });
+
+                                }
+                            });
+                            return;
+                        }
+                    }
+                    $('.nestable-container').html('<div class="text-center">Tanımlı ürün bulunamadı.</div>');
+                }
+            });
+    </script>
+}

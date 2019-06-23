@@ -1,0 +1,113 @@
+﻿@using Arwend;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.CustomerProductListModel
+@{
+    Layout = "~/Views/Shared/_AnonymousLayout.cshtml";
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/datatables/css/jquery.dataTables.css?@version">
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/datatables/css/dataTables.bootstrap.css?@version">
+    <style>
+        tr.selected {
+            background-color: rgba(0, 255, 0, 0.33) !important;
+        }
+
+        .table-striped > tbody > tr.selected:nth-child(odd) > td, .table-striped > tbody > tr.selected:nth-child(odd) > th {
+            background-color: rgba(0, 255, 0, 0.33) !important;
+        }
+
+        .table-hover > tbody > tr.selected:hover > td, .table-hover > tbody > tr.selected:hover > th {
+            background-color: rgba(0, 255, 0, 0.1) !important;
+        }
+    </style>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.TableFor(m => Model.Products, allowNew: false)
+            <a id="add-subcategory" class="btn btn-primary btn-small col-md-12 col-xs-12" href="#" style="position: fixed; bottom: 60px; width: 80vw; margin-left: 10vw;" title="Ürün ekle" onclick="ConfirmOfferProducts('@Model.OfferId')"><span>Ürünleri onayla&nbsp;<i class="fa fa-plus"></i></span></a>
+            <script>
+                var addProducts = true;
+                var aTargets = [0, 6, 7, 8, 10, 12, 13];
+            </script>
+            @if (!Model.ShowSortOrder)
+            {
+                <script>
+                    aTargets.push(4);
+                </script>
+            }
+            @if (!Model.ShowPrice)
+            {
+                <script>
+                    aTargets.push(11);
+                </script>
+            }
+            @if (Model.ExcludeOptions)
+            {
+                <script>
+                    aTargets.push(9);
+                </script>
+            }
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.dataTables.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/dataTables.bootstrap.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.jeditable.js?@version"></script>
+    <script type="text/javascript">
+                    var totalPrice = 0;
+        var duration = 
+            $(document).ready(function () {
+                
+                    var productsTable = $('#product-list').dataTable({
+                        "aoColumnDefs": [{ "aTargets": aTargets, "bVisible": false }, { "aTargets": [4], "sWidth": "10%" }, { "aTargets": [4], "sWidth": "60px" }],
+                        "bAutoWidth": false,
+                        "iDisplayLength": 100,
+                        "bPaginate": false,
+                        "bFilter":false
+                    });
+                    editingTables["Product"] = productsTable;
+                    //$(".dataTables_info").parent().next().html("<div class='total-price-container pull-right'><span>Toplam Fiyat: 0 TL</span></div>");
+            });
+
+        function ConfirmOfferProducts(id) {
+            $.Arwend.Ajax.Parameters = {
+                Action: "confirmofferproducts",
+                products: $("#product-list tr.selected").map(function () { return $(this).attr("data-id"); }).get().join(";"),
+                offerid: id
+            };
+            $.Arwend.Ajax.GetResponse(function (response) {
+                swal({
+                        title: "Onaylama işlemi tamamlandı!",
+                        text: "Teklifiniz hazırlanıp tarafınıza iletilecektir.",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Tamam",
+                        closeOnConfirm: true,
+                        html: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            window.location.href = "http://egemedya.com.tr/";
+                        }
+                    });
+            }, false, true);
+        }
+
+        if (typeof addProducts !== 'undefined' && addProducts) {
+            $('table tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+                //if (calculatePrice) {
+                //var productPrice = parseFloat($(this).find("td").last().html()) * duration;
+                //$(".total-price-container span").html("Toplam Fiyat: "+totalPrice+" TL");
+                //}
+            });
+        }
+
+    </script>
+}

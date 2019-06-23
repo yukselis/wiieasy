@@ -1,0 +1,75 @@
+﻿@using Dalowe.View.Web.Framework.Helpers
+@model Dalowe.View.Web.Framework.Models.Account.LoginModel
+@{
+    ViewBag.AnimationStyle = "bounceInDown";
+    ViewBag.Title = "Kullanıcı Girişi";
+    Layout = "~/Views/Shared/_AnonymousLayout.cshtml";
+    string cdnUrl = Arwend.ConfigurationManager.CdnUrl;
+    string version = Arwend.ConfigurationManager.ApplicationVersion;
+}
+<div id="signin-page-content">
+    <img src="~/Files/images/logo.png" class="img-responsive" />
+    @using (Html.BeginForm("Login", "Account", null, FormMethod.Post, new { @class = "form", @id = "login-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @*<h1 class="block-heading">Giriş Yap</h1>*@
+        <p>Giriş yapmak için lütfen bilgilerinizi doğrulayınız!</p>
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            <div class="input-icon">
+                <i class="fa fa-user"></i>
+                @Html.HiddenFor(model => model.ReturnUrl)
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control validate", placeholder = "Kullanıcı adı / E-posta", autocomplete = "off" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-icon">
+                <i class="fa fa-key"></i>
+                @Html.PasswordFor(model => model.Password, new { @class = "sensitive-data form-control validate", placeholder = "Şifre", autocomplete = "off" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(model => model.RememberMe)&nbsp;
+                    Beni Hatırla
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-green">
+                Giriş
+                &nbsp;<i class="fa fa-chevron-circle-right"></i>
+            </button>
+            @*<a id="btn-forgot-pwd" href="@Url.Action("ForgotPassword", "Account")" class="mlm">Şifremi Unuttum?</a>*@
+        </div>
+        <hr />
+    }
+</div>
+@section scripts
+{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#login-form").validate({
+                errorElement: 'span',
+                errorClass: 'help-block',
+                rules: {
+                    UserName: { required: true },
+                    Password: { required: true }
+                },
+                messages: {
+                    UserName: { required: "Lütfen kullanıcı adınızı giriniz!" },
+                    Password: { required: "Lütfen şifrenizi giriniz!" },
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                }
+            });
+            $("input.sensitive-data").val("");
+        });
+    </script>
+}

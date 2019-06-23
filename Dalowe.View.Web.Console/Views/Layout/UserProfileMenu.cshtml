@@ -1,0 +1,36 @@
+﻿@using Dalowe.View.Web.Framework.Helpers;
+@{
+    
+    var user = Url.GetCurrentUser();
+}
+<ul class="dropdown-menu dropdown-user pull-right animated boun">
+    <li>
+        <div class="navbar-content">
+            <div class="row">
+                <div class="col-md-5 col-xs-5">
+                    <img src="@Url.GetImageUrl(user.ProfileImagePath)" class="img-responsive img-circle" />
+                    <p class="text-center mtm">
+                        @*<a href="#" class="change-avatar">
+                            <small>Profil Resmini Değiştir</small>
+                        </a>*@
+                    </p>
+                </div>
+                <div class="col-md-7 col-xs-5">
+                    <span>@user.Name</span>
+                    <p class="text-muted small">@user.Email</p>
+                    <div class="divider"></div>
+                    @*<a href="@Url.Action("ViewProfile", "Account")" class="btn btn-primary btn-sm"><i class="fa fa-users"></i>&nbsp;&nbsp;Profilim</a>*@
+                </div>
+            </div>
+        </div>
+        <div class="navbar-footer">
+            <div class="navbar-footer-content">
+                <div class="row">
+                    @*<div class="col-md-6 col-xs-6"><a href="@Url.Action("ChangePassword", "Account")" class="btn btn-default btn-sm"><i class="fa fa-key"></i>&nbsp;&nbsp;Şifremi Değiştir</a></div>*@
+                    <div class="col-md-6 col-xs-6"><a href="@Url.Action("ViewProfile", "Account")" class="btn btn-default btn-sm"><i class="fa fa-users"></i>&nbsp;&nbsp;Profilim</a></div>
+                    <div class="col-md-6 col-xs-6"><a href="@Url.Action("LogOut", "Account")" class="btn btn-default btn-sm pull-right"><i class="fa fa-power-off">&nbsp;&nbsp;Çıkış</i></a></div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>

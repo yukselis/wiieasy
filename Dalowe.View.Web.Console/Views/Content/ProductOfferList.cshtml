@@ -1,0 +1,33 @@
+﻿@using Arwend;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Arwend.Web.View.Mvc.Models.Generics.GenericListModel<Dalowe.View.Web.Framework.Models.Content.ProductOfferModel>
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/datatables/css/jquery.dataTables.css?@version">
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/datatables/css/dataTables.bootstrap.css?@version">
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.TableFor(m => Model.Items)
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.dataTables.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/dataTables.bootstrap.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.jeditable.js?@version"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var offersTable = $('#productoffer-list').dataTable({
+                "aoColumnDefs": [{ "aTargets": [3], "sWidth": "10%" }, { "aTargets": [4], "sWidth": "60px" }, { "aTargets": [4,5], "bSearchable": false, "bSortable": false, "sWidth": "100px" }],
+                "bAutoWidth": false
+            });
+            editingTables["Offer"] = offersTable;
+        });
+    </script>
+}

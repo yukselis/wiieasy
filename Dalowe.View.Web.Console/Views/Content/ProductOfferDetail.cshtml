@@ -1,0 +1,148 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.Domain.Sales
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.ProductOfferModel
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles
+{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/bootstrap-daterangepicker/daterangepicker-bs3.css?@version">
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <div class="caption">@(Model.IsNew ? "Yeni Yer listesi oluştur" : Model.Name)</div>
+                </div>
+                <div class="portlet-body col-md-12">
+                    @using (Html.BeginForm("ProductOfferDetail", "Content", null, FormMethod.Post, new { @class = "form-horizontal", @id = "page-detail-form", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-body pal">
+                            @Html.ValidationSummary(true)
+                            <div class="col-md-9 col-xs-12">
+                                @Html.StatusFor(model => model.StatusID)
+                                @Html.TextFieldFor(model => model.Name)
+                                @Html.RichTextFieldFor(model => model.Description)
+                                @if (Model.IsNew || Model.OfferStatus == OfferStatus.ProductList)
+                                {
+                                    <text>@Html.DropDownListFor(model => model.CustomerId, Model.Customers, true, "Müşteri seçiniz")</text>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3 text-right-o">
+                                            <label class="control-label">Müşteri</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span>@Model.CustomerName</span>
+                                        </div>
+                                    </div>
+                                    @Html.HiddenFor(model => model.CustomerId)
+                                }
+                                @if (Model.IsNew || Model.OfferStatus == OfferStatus.ProductList)
+                                {
+                                    <text>@Html.DateRangeFieldFor("Tarih aralığı", m => m.StartTime, m => m.EndTime)</text>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3 text-right-o">
+                                            <label class="control-label">Tarih aralığı</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span>@Model.StartTime - @Model.EndTime</span>
+                                        </div>
+                                    </div>
+                                    @Html.HiddenFor(model => model.StartTime)
+                                    @Html.HiddenFor(model => model.EndTime)
+                                }
+
+                                @if (!Model.IsNew)
+                                {
+                                    if (Model.StartTime < DateTime.Today)
+                                    {
+                                        <div class="form-group">
+                                            <div class="col-md-3 text-right-o">
+                                                <label class="control-label">Ürünler</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <a class="btn btn-primary btn-small mls" href="@Url.Action("FilterProductList", "Content", new { offerId = Model.ID, showOnlyProducts = true})" title="Ürünleri Göster">
+                                                    <span>Ürünleri Göster</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <div class="col-md-3 text-right-o">
+                                                <label class="control-label">Ürünler</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <a class="btn btn-primary btn-small mls" href="@Url.Action("FilterProductList", "Content", new { offerId = Model.ID, showOnlyProducts = new[] { OfferStatus.ProductList, OfferStatus.WaitingConfirm }.Contains(Model.OfferStatus) == false })" title="@(new []{OfferStatus.ProductList, OfferStatus.WaitingConfirm}.Contains(Model.OfferStatus) ? "Ürün ekleme" : "Seçilen Ürünleri Göster")">
+                                                    <span>@(new[] { OfferStatus.ProductList, OfferStatus.WaitingConfirm }.Contains(Model.OfferStatus) ? "Ürün ekleme" : "Seçilen Ürünleri Göster")</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    if (Model.OfferStatus == OfferStatus.Confirmed)
+                                    {
+                                        <div class="form-group">
+                                            <div class="col-md-3 text-right-o">
+                                                <label class="control-label">Ürünleri Tekrar Düzenle</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <a class="btn btn-primary btn-small mls" href="@Url.Action("FilterProductList", "Content", new {offerId = Model.ID})" title="Ürünleri Tekrar Düzenle">
+                                                    <span>Ürünleri Tekrar Düzenle</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                @if (!Model.IsNew && (Model.OfferStatus == OfferStatus.Confirmed || Model.OfferStatus == OfferStatus.WaitingConfirm))
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3 text-right-o">
+                                            <label class="control-label">Teklif</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <a class="btn btn-primary btn-small mls" href="@Url.Action("ConvertToOffer", "Content", new { offerId = Model.ID, isConfirmed = Model.OfferStatus != OfferStatus.WaitingConfirm })" title="Ürün Ekle">
+                                                <span>Teklife çevir</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!Model.IsNew)
+                                {
+                                    <text>@Html.HistoryPanelFor(model => model.History)</text>
+                                }
+                                @Html.HiddenFor(model => model.OfferStatus)
+                                @Html.HiddenFor(model => model.RowGuid)
+                                @Html.HiddenFor(model => model.ID)
+                                @Html.ActionButtonsFor()
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script src="@(cdnUrl)js/jquery.validate.unobtrusive.js?@version"></script>
+    <script src="@(cdnUrl)vendors/moment/moment.js?@version"></script>
+    <script src="@(cdnUrl)vendors/bootstrap-daterangepicker/daterangepicker.js?@version"></script>
+    <script>
+        $(document).ready(function () {
+
+
+        });
+    </script>
+}

@@ -1,0 +1,245 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.Domain.Sales
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.OfferModel
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles
+{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload-ui.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload.css?@version" />
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <div class="caption">@(Model.IsNew ? "Yeni teklif oluştur" : Model.Name)</div>
+                </div>
+                <div class="portlet-body col-md-12">
+                    @using (Html.BeginForm("OfferDetail", "Content", null, FormMethod.Post, new { @class = "form-horizontal", @id = "page-detail-form", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-body pal">
+                            @Html.ValidationSummary(true)
+                            <div class="col-md-8 col-xs-12">
+                                @Html.StatusFor(model => model.StatusID)
+                                @Html.TextFieldFor(model => model.Name)
+                                @Html.RichTextFieldFor(model => model.Description)
+                                @Html.TextFieldFor(model => model.TotalPrice, new { disabled = "true" })
+                                @if (Model.IsNew || Model.OfferStatus == OfferStatus.ProductList)
+                                {
+                                    <text>@Html.DropDownListFor(model => model.CustomerId, Model.Customers, true, "Müşteri seçiniz")</text>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3 text-right-o">
+                                            <label class="control-label">Müşteri</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span>@Model.CustomerName</span>
+                                        </div>
+                                    </div>
+                                    @Html.HiddenFor(model => model.CustomerId)
+                                }
+
+                                @if (!Model.IsNew)
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3 text-right-o">
+                                            <label class="control-label">Sözleşme</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @if (Model.OfferStatus == OfferStatus.Option)
+                                            {
+                                                <a class="btn btn-primary btn-small mls" href="#" onclick="ConfirmConvert('@Model.ID');" title="Sözleşmeye çevir">
+                                                    <span>Sözleşmeye çevir</span>
+                                                </a>
+                                            }
+                                            <a class="btn btn-primary btn-small mls" href="@Url.Action("FilterProductList", "Content", new { offerId = Model.ID, showOnlyProducts = true })" title="Opsiyonları Göster">
+                                                <span>Opsiyonları Göster</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!Model.IsNew)
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3 text-right-o">
+                                            <label class="control-label">Yazdır</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <a class="btn btn-primary btn-small mls" href="@Url.Action("OfferLayout", "Content", new { offerId = Model.ID })" title="Yazdır">
+                                                <span>Yazdır</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!Model.IsNew)
+                                {
+                                    <text>@Html.HistoryPanelFor(model => model.History)</text>
+                                }
+                                @Html.HiddenFor(model => model.OfferStatus)
+                                @Html.HiddenFor(model => model.RowGuid)
+                                @Html.HiddenFor(model => model.ID)
+                                @Html.ActionButtonsFor()
+                            </div>
+                            @if (!Model.IsNew)
+                            {
+                                <div class="col-md-4 col-xs-12">
+                                    <div class="title col-md-12 col-xs-12">
+                                        <b>Teklif Kalemleri</b>
+                                    </div>
+
+                                    <div id="subcategory-list" class="dd nestable-container col-md-12 col-xs-12" data-output="">
+                                        <div class="text-center">
+                                            <div class="wait fixed-size"></div>
+                                            Teklif kalemleri yüklenirken lütfen bekleyiniz...
+                                        </div>
+                                    </div>
+                                    @*<a id="add-subcategory" class="btn btn-primary btn-small col-md-12 col-xs-12" href="@Url.Action("OfferItemDetail", "Content", new { id = 0, parentId = Model.ID })" title="Yeni teklif kalemi"><span>Yeni teklif kalemi&nbsp;<i class="fa fa-plus"></i></span></a>*@
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script src="@(cdnUrl)js/jquery.validate.unobtrusive.js?@version"></script>
+    <script src="@(cdnUrl)vendors/moment/moment.js?@version"></script>
+    <script src="@(cdnUrl)vendors/jquery-nestable/jquery.nestable.js?@version"></script>
+    <script>
+
+        function ConfirmConvert(id) {
+            swal({
+                    title: "Uyarı!",
+                    text: "Sözleşmeye çevirmek istediğinizden emin misiniz?",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Tamam",
+                    closeOnConfirm: true,
+                    html: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        window.location.href = "/Content/CreateContract?offerId=" + id;
+                    }
+                });
+        }
+
+        $(document).ready(function () {
+            var output;
+            var updateOutput = function (e) {
+                var list = e.length ? e : $(e.target);
+                output = list.data('output');
+                if (window.JSON) {
+                    list.data('output', window.JSON.stringify(list.nestable('serialize')));
+                } else {
+                    list.data('output', 'JSON browser support required for this demo.');
+                }
+            };
+
+            $.Arwend.Ajax.Parameters = {
+                Action: "getofferitems",
+                offer: '@Html.Encode(Model.ID)'
+            };
+            $.Arwend.Ajax.GetResponse(function (response) { LoadSubCategories(response); }, false, true);
+
+            function LoadSubCategories(data) {
+                var content = "";
+                if (data.length > 0) {
+                    var items = eval(data);
+                    if (items != null && items.length > 0) {
+                        content = "<ol class='dd-list'>";
+                        for (var i = 0; i < items.length; i++) {
+                            content += "<li data-sortorder='" + items[i].SortOrder + "' data-id='" + items[i].ID + "' data-status='" + (items[i].StatusID == 1 ? "active" : "passive") + "' title='" + (items[i].StatusID == 1 ? "Aktif" : "Pasif") + " durumda' class='dd-item dd3-item'>";
+                            //content += "<div class='dd-handle dd3-handle'></div>";
+                            content += "<button type='button' data-action='delete' title='Sil'>Sil</button>";
+                            content += "<div class='dd3-content'>";
+                            content += "<i class='fa fa-circle'></i><a class='nested-list-item' href='/content/offeritemdetail/?id=" + items[i].ID + "'>" + items[i].County + " - " + items[i].Count + " " + items[i].Type + "</a></div>";
+                            content += "</li>";
+                        }
+                        content += "</ol>";
+                        $('.nestable-container').html(content)
+                            .nestable({
+                                group: 1,
+                                onDragFinished: function (args) {
+                                    $.Arwend.Ajax.Parameters = {
+                                        Action: "rebuildsortorder",
+                                        Menu: '@Html.Encode(Model.ID)',
+                                        SourceId: args.sourceId,
+                                        ParentId: args.parentId,
+                                        SortOrder: args.sortOrder
+                                    };
+                                    $.Arwend.Ajax.GetResponse(function (data) {
+                                        var changedItems = eval(data);
+                                        if (changedItems != null && changedItems.length > 0) {
+                                            for (var i = 0; i < changedItems.length; i++) {
+                                                $('#subcategory-list li.dd-item[data-id="' + changedItems[i].ID + '"]')[0].dataset.sortorder = changedItems[i].sortOrder;
+                                            }
+                                        }
+                                    });
+                                }
+                            }).nestable('collapseAll')
+                            .on('change', updateOutput).trigger('change');
+                        $('.nestable-container button[data-action="delete"]').on('click', function (e) {
+                            var currentItem = $(this).closest('li');
+                            var id = $(currentItem).data('id');
+                            if (id != null && id != 'undefined' && id > 0) {
+                                swal({
+                                        title: "Silmek istediğinize emin misiniz?",
+                                        text: "Silme işlemini onaylarsanız bu kayıt kalıcı olarak silinecektir!",
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "Evet",
+                                        cancelButtonText: "Hayır",
+                                        closeOnConfirm: false,
+                                        closeOnCancel: true
+                                    },
+                                    function (isConfirm) {
+                                        if (isConfirm) {
+                                            $.Arwend.Ajax.Parameters = {
+                                                Action: "deleteofferitem",
+                                                ID: id
+                                            };
+                                            $.Arwend.Ajax.GetResponse(function (response) {
+                                                if (response.message.isNullOrEmpty()) {
+                                                    swal({ title: "Silindi!", text: "Silme işlemi başarıyla gerçekleştirildi.", type: "success", allowOutsideClick: true });
+                                                    var parentList = $(currentItem).closest('ol');
+                                                    if ($(parentList) != null && $(parentList).length > 0 && $(parentList).find("li").length <= 1) {
+                                                        $('button[data-action!="delete"]', $(parentList).parent()).remove();
+                                                        $(parentList).remove();
+                                                    }
+                                                    else
+                                                        $(currentItem).remove();
+                                                    if ($('.nestable-container li').length == 0)
+                                                        $('.nestable-container').html('<div class="text-center">Alt kategori tanımlı değil.</div>');
+                                                    else
+                                                        $('.nestable-container').nestable('reset');
+                                                }
+                                                else
+                                                    swal("Hata", response.message, "error");
+                                            });
+                                        }
+                                    });
+
+                            }
+                        });
+                        return;
+                    }
+                }
+                $('.nestable-container').html('<div class="text-center">Tanımlı teklif kalemi bulunamadı.</div>');
+            }
+        });
+    </script>
+}

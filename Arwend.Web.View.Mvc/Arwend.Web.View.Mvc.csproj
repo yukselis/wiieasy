@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{23A50642-F6EA-4F60-8355-9232FFC38DA7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Arwend.Web.View.Mvc</RootNamespace>
+    <AssemblyName>Arwend.Web.View.Mvc</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionResults\JsonResult.cs" />
+    <Compile Include="Attributes\DataAnnotations\SwitchAttribute.cs" />
+    <Compile Include="Attributes\DataAnnotations\ColumnAttribute.cs" />
+    <Compile Include="Attributes\DataAnnotations\TableAttribute.cs" />
+    <Compile Include="Attributes\DataAnnotations\Validations\FileSizeAttribute.cs" />
+    <Compile Include="Attributes\DataAnnotations\Validations\FileTypesAttribute.cs" />
+    <Compile Include="Attributes\Filters\ActionSessionStateAttribute.cs" />
+    <Compile Include="Attributes\Filters\AllowAuthenticatedAttribute.cs" />
+    <Compile Include="Attributes\Filters\AllowCrossSiteAttribute.cs" />
+    <Compile Include="Attributes\Filters\CaptchaValidationAttribute.cs" />
+    <Compile Include="Attributes\Filters\NoCacheAttribute.cs" />
+    <Compile Include="Attributes\Filters\PermanentRedirectAttiribute.cs" />
+    <Compile Include="Attributes\Filters\SslFilterAttribute.cs" />
+    <Compile Include="Controllers\Base\Controller.cs" />
+    <Compile Include="Controllers\CacheController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\Factory\ControllerFactory.cs" />
+    <Compile Include="Controllers\MonitorController.cs" />
+    <Compile Include="Controls\Base\Control.cs" />
+    <Compile Include="Controls\Binders\DataGrid\CollectionBinder.cs" />
+    <Compile Include="Controls\Binders\DataGrid\Configuration.cs" />
+    <Compile Include="Controls\Binders\DataGrid\Footer.cs" />
+    <Compile Include="Controls\Binders\DataGrid\Header.cs" />
+    <Compile Include="Controls\Combobox.cs" />
+    <Compile Include="Controls\QueryString.cs" />
+    <Compile Include="Controls\Table\Cell.cs" />
+    <Compile Include="Controls\Table\CellCollection.cs" />
+    <Compile Include="Controls\Table\Column.cs" />
+    <Compile Include="Controls\Table\ColumnCollection.cs" />
+    <Compile Include="Controls\Table\Columns\CheckboxColumn.cs" />
+    <Compile Include="Controls\Table\Columns\ComboboxColumn.cs" />
+    <Compile Include="Controls\Table\Columns\DateTimeColumn.cs" />
+    <Compile Include="Controls\Table\Columns\FileColumn.cs" />
+    <Compile Include="Controls\Table\Columns\FilterboxColumn.cs" />
+    <Compile Include="Controls\Table\Columns\LinkColumn.cs" />
+    <Compile Include="Controls\Table\Columns\NumberboxColumn.cs" />
+    <Compile Include="Controls\Table\Columns\TextAreaColumn.cs" />
+    <Compile Include="Controls\Table\Columns\TextboxColumn.cs" />
+    <Compile Include="Controls\Table\Row.cs" />
+    <Compile Include="Controls\Table\RowCollection.cs" />
+    <Compile Include="Controls\Table\Table.cs" />
+    <Compile Include="Controls\Table\TableFooter.cs" />
+    <Compile Include="Controls\Table\TableHeader.cs" />
+    <Compile Include="Controls\Tabs\TabContainer.cs" />
+    <Compile Include="Controls\Tabs\TabPanel.cs" />
+    <Compile Include="Controls\Tabs\TabPanelCollection.cs" />
+    <Compile Include="Controls\WebControl.cs" />
+    <Compile Include="EmptyView.cs" />
+    <Compile Include="Extensions\ControllerExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\StringBuilderExtensions.cs" />
+    <Compile Include="Helpers\HtmlHelper.cs" />
+    <Compile Include="Helpers\ViewHelper.cs" />
+    <Compile Include="Html\AlphabetBar.cs" />
+    <Compile Include="Html\Analytics.cs" />
+    <Compile Include="Html\ButtonExtensions.cs" />
+    <Compile Include="Html\ButtonSize.cs" />
+    <Compile Include="Html\ButtonStyles.cs" />
+    <Compile Include="Html\Captcha.cs" />
+    <Compile Include="Html\DateExtensions.cs" />
+    <Compile Include="Html\EnumExtensions.cs" />
+    <Compile Include="Html\FormControlExtensions.cs" />
+    <Compile Include="Html\AwesomeIcons.cs" />
+    <Compile Include="Html\Glyphicons.cs" />
+    <Compile Include="Html\HtmlEditor.cs" />
+    <Compile Include="Html\IconExtensions.cs" />
+    <Compile Include="Html\InputGroupOption.cs" />
+    <Compile Include="Html\ItemDrawingMode.cs" />
+    <Compile Include="Html\LabelExtensions.cs" />
+    <Compile Include="Html\ListExtensions.cs" />
+    <Compile Include="Html\MvcInputGroup.cs" />
+    <Compile Include="Html\PaginationAlignment.cs" />
+    <Compile Include="Html\PaginationExtensions.cs" />
+    <Compile Include="Html\PaginationSize.cs" />
+    <Compile Include="Html\PaginationType.cs" />
+    <Compile Include="Html\Table.cs" />
+    <Compile Include="Html\TextInputExtensions.cs" />
+    <Compile Include="HttpApplication.cs" />
+    <Compile Include="HttpModules\ErrorHandleModule.cs" />
+    <Compile Include="HttpRuntime\RequestValidator.cs" />
+    <Compile Include="IMappingProvider.cs" />
+    <Compile Include="Models\Base\AlertMessageModel.cs" />
+    <Compile Include="Models\Base\AuditModel.cs" />
+    <Compile Include="Models\Base\BaseModel.cs" />
+    <Compile Include="Models\Base\CaptchaModel.cs" />
+    <Compile Include="Models\Base\CollocationModel.cs" />
+    <Compile Include="Models\Base\Interfaces\IAuditable.cs" />
+    <Compile Include="Models\Base\Interfaces\IPageable.cs" />
+    <Compile Include="Models\Base\Interfaces\IReliable.cs" />
+    <Compile Include="Models\Base\Interfaces\ISensible.cs" />
+    <Compile Include="Models\Base\Interfaces\ISortable.cs" />
+    <Compile Include="Models\Base\ListModel.cs" />
+    <Compile Include="Models\Base\PaginationModel.cs" />
+    <Compile Include="Models\Base\TableModel.cs" />
+    <Compile Include="Models\Binders\ByteModelBinder.cs" />
+    <Compile Include="Models\Binders\FlagEnumerationModelBinder.cs" />
+    <Compile Include="Models\Binders\ModelBinderProvider.cs" />
+    <Compile Include="Models\BreadcrumbsItemModel.cs" />
+    <Compile Include="Models\Dynamics\DynamicListItemModel.cs" />
+    <Compile Include="Models\Dynamics\DynamicListModel.cs" />
+    <Compile Include="Models\Dynamics\DynamicViewModel.cs" />
+    <Compile Include="Models\Generics\GenericListModel.cs" />
+    <Compile Include="Models\Generics\TreeViewItemModel.cs" />
+    <Compile Include="Models\Generics\TreeViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routing\DictionaryRouteValueTranslationProvider.cs" />
+    <Compile Include="Routing\IRouteValueTranslationProvider.cs" />
+    <Compile Include="Routing\PermanentRouteData.cs" />
+    <Compile Include="Routing\RouteValueTranslation.cs" />
+    <Compile Include="Routing\TranslatedRoute.cs" />
+    <Compile Include="Routing\TranslatedRouteCollectionExtensions.cs" />
+    <Compile Include="SharedContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Arwend.Web\Arwend.Web.csproj">
+      <Project>{d39e5623-b7e7-4e4b-821c-a2c61432d5a3}</Project>
+      <Name>Arwend.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arwend\Arwend.csproj">
+      <Project>{36dfbacb-73d4-4c14-b217-7d2f5a48e613}</Project>
+      <Name>Arwend</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HttpHandlers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

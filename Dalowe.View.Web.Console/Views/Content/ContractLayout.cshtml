@@ -1,0 +1,739 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.ContractModel
+
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="@ConfigurationManager.Language" lang="@ConfigurationManager.Language">
+
+<head>
+    <title>@(ViewBag.Title ?? "Genel Bakış") | Ege Medya Yönetim Paneli</title>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1254" />
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-9" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta content="text/html; charset=x-mac-turkish" http-equiv="content-type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=1.0, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/bootstrap/css/bootstrap.min.css?@version" />
+    <style>
+        @@media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            .print-only {
+                display: block;
+            }
+
+            .hide-print {
+                display: none;
+            }
+        }
+
+        .print-only {
+            display: none;
+        }
+
+        .hide-print {
+            display: block;
+        }
+
+        .full-width {
+            float: left;
+            width: 100%;
+        }
+
+        .border-left {
+            border-left: 1px inset #292929;
+            box-sizing: border-box;
+        }
+
+        .border-right {
+            border-right: 1px inset #292929;
+            box-sizing: border-box;
+        }
+
+        .border-top {
+            border-top: 1px inset #292929;
+            box-sizing: border-box;
+        }
+
+        .border-bottom {
+            border-bottom: 1px inset #292929;
+            box-sizing: border-box;
+        }
+
+        .logo-container img {
+            width: 200px;
+            margin-top: 50px;
+            margin-left: 20px;
+        }
+
+        span {
+            float: left;
+            width: 100%;
+            font-weight: bold;
+            text-align: left;
+            font-size: 12px;
+            font-family: calibri;
+            color: #292929;
+            line-height: 15px;
+        }
+
+        p {
+            float: left;
+            width: 100%;
+            font-weight: bold;
+            text-align: left;
+            font-size: 12px;
+            font-family: calibri;
+            color: #292929;
+            line-height: 15px;
+            margin: 0;
+        }
+
+        li {
+            float: left;
+            width: 100%;
+            font-weight: bold;
+            text-align: left;
+            font-size: 12px;
+            font-family: calibri;
+            color: #292929;
+            line-height: 15px;
+        }
+
+        .page-container {
+        }
+
+            .page-container div {
+                padding: 0;
+            }
+
+        .contract-title {
+            margin-top: 50px;
+        }
+
+
+            .contract-title span {
+                text-align: center;
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+        .columns-container {
+            margin-top: 20px;
+        }
+
+            .columns-container span {
+                text-align: center;
+                font-weight: bold;
+                font-size: 14px;
+            }
+
+        .offeritem {
+        }
+
+            .offeritem span {
+                text-align: center;
+            }
+
+        .price-container {
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+            .price-container span {
+                font-weight: bold;
+            }
+
+        .contract-text {
+            margin-top: 3px;
+        }
+
+            .contract-text.double-margin {
+                margin-top: 20px;
+            }
+
+        .payment-info-container {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .break-after {
+            display: block;
+            page-break-after: always;
+            position: relative;
+            float: none;
+            min-height: 1px;
+            width: 100%;
+        }
+
+        .break-before {
+            display: block;
+            page-break-before: always;
+            position: relative;
+            float: none;
+            min-height: 1px;
+            width: 100%;
+        }
+
+        .ordino-price-row {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body class="full-strech-background">
+    <div class="col-lg-6 col-lg-offset-3 page-container">
+        <div class="logo-container full-width">
+            <img src="/Files/images/logo.png" />
+        </div>
+        <div class="contract-title col-xs-12">
+            <span>REKLAM YERİ KULLANIM HİZMET TEKLİFİ</span>
+            <span>BÖLÜM A ÖZEL HÜKÜMLER</span>
+        </div>
+        <div class="col-xs-12 contract-date">
+            <span class="text-right">@DateTime.Now.ToShortDateString()</span>
+        </div>
+        <div class="col-xs-12 contract-info">
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>SÖZLEŞME NO</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                    <span>:</span>
+                </div>
+                <div class="col-xs-8 info-right">
+                    <span>@Model.ContractNo</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>KİRALAYAN</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                    <span>:</span>
+                </div>
+                <div class="col-xs-8 info-right">
+                    <span>
+                        SİSUS REKLAMCILIK TURİZM ORG. HİZM. SAN. TİC. LTD. ŞTİ.
+                        ADALET MAH. MANAS BUL. NO:39 KAT:38 D: 3806 FOLKART TOWERS BAYRAKLI / İZMİR
+                        TEL: 0232 290 01 50	FAKS: 0232 290 01 40
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>KİRALAYAN VD./NO</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                    <span>:</span>
+                </div>
+                <div class="col-xs-8 info-right">
+                    <span>KARŞIYAKA / 771 031 2030</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>KİRACI</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                    <span>:</span>
+                </div>
+                <div class="col-xs-8 info-right">
+                    <span>@Model.Offer.Customer.Name</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>KİRACI VD./NO</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                    <span>:</span>
+                </div>
+                <div class="col-xs-8 info-right">
+                    <span>@Model.Offer.Customer.TaxInfo</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>REKLAM BÖLGESİ</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                    <span>:</span>
+                </div>
+                <div class="col-xs-8 info-right">
+                    <span>@string.Join(" - ", Model.Offer.Items.Select(x => x.Products.First().County).Distinct())</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>MARKA - ÜRÜN</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                    <span>:</span>
+                </div>
+                <div class="col-xs-8 info-right">
+                    <span>@Model.Offer.Customer.Brand</span>
+                </div>
+            </div>
+        </div>
+        <div class="columns-container col-xs-12 border-top border-left border-right border-bottom">
+            <div class="col-xs-6">
+                <div class="col-xs-5 border-right">
+                    <span>TARİH</span>
+                </div>
+                <div class="col-xs-5 border-right">
+                    <span>ÜRÜN</span>
+                </div>
+                <div class="col-xs-2 border-right">
+                    <span>ADET</span>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="col-xs-2 border-right">
+                    <span>FACE</span>
+                </div>
+                <div class="col-xs-3 border-right">
+                    <span>SÜRE</span>
+                </div>
+                <div class="col-xs-3 border-right">
+                    <span>AÇIKLAMA</span>
+                </div>
+                <div class="col-xs-4">
+                    <span>TOPLAM FİYAT</span>
+                </div>
+            </div>
+        </div>
+        <div class="offeritem-container col-xs-12">
+            @foreach (var item in Model.Offer.Items)
+            {
+                int printPrice = item.UnitPrintPrice * item.FaceCount;
+                <div class="offeritem col-xs-12 border-left border-bottom border-right">
+                    <div class="col-xs-6">
+                        <div class="col-xs-5 border-right">
+                            <span>@item.TimeRange.StartTime.ToShortDateString() - @item.TimeRange.EndTime.ToShortDateString()</span>
+                        </div>
+                        <div class="col-xs-5 border-right">
+                            <span>@item.Products.First().Type.ToStringValue() - @item.Products.First().County</span>
+                        </div>
+                        <div class="col-xs-2 border-right">
+                            <span>@item.Products.Count</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="col-xs-2 border-right">
+                            <span>@item.FaceCount</span>
+                        </div>
+                        <div class="col-xs-3 border-right">
+                            <span>@item.Duration @item.Products.First().PriceRange.ToStringValue()</span>
+                        </div>
+                        <div class="col-xs-3 border-right">
+                            <span>KİRA</span>
+                        </div>
+                        <div class="col-xs-4">
+                            <span>@item.TotalPrice ₺</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-xs-12 price-container">
+            <div class="col-xs-12 total-price-row">
+                <div class="col-xs-6">
+                    <span>
+                        Hizmet Bedeli
+                    </span>
+                </div>
+                <div class="col-xs-6">
+                    <span class="text-right">
+                        @Model.Offer.TotalRentPrice ₺
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-12 vat-row">
+                <div class="col-xs-6">
+                    <span>
+                        KDV %18
+                    </span>
+                </div>
+                <div class="col-xs-6">
+                    <span class="text-right">
+                        @Math.Ceiling(Model.Offer.TotalRentPrice * 0.18) ₺
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-12 vat-added-row border-top">
+                <div class="col-xs-6">
+
+                </div>
+                <div class="col-xs-6">
+                    <span class="text-right">
+                        @(Model.Offer.TotalRentPrice + Math.Ceiling(Model.Offer.TotalRentPrice * 0.18)) ₺
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-12 ordino-price-row">
+                <div class="col-xs-6">
+                    <span>
+                        Baskı ve Uyg. Bedeli
+                    </span>
+                </div>
+                <div class="col-xs-6">
+                    <span class="text-right">
+                        @Model.Offer.TotalPrintPrice ₺
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-12 ordino-vat-row">
+                <div class="col-xs-6">
+                    <span>
+                        KDV %18
+                    </span>
+                </div>
+                <div class="col-xs-6">
+                    <span class="text-right">
+                        @Math.Ceiling(Model.Offer.TotalPrintPrice * 0.18) ₺
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-12 ordino-vat-added-row border-top">
+                <div class="col-xs-6">
+                    <span>
+                        GENEL TOPLAM
+                    </span>
+                </div>
+                <div class="col-xs-6">
+                    <span class="text-right">
+                        @(Model.Offer.TotalPrice + Math.Ceiling(Model.Offer.TotalPrice * 0.18)) ₺
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                İşbu Reklam Yeri Hizmet Kullanım Koşulları, Bölüm A – Özel Hükümler, Bölüm B – Çalışma Koşulları, Bölüm C – Genel Hükümler olmak üzere birbirinden ayrılmaz üç ana bölümden oluşmaktadır.
+            </p>
+        </div>
+        <div class="col-xs-12 payment-info-container">
+            <div class="col-xs-12 payment-info-title">
+                <span>ÖDEME KOŞULLARI</span>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>Ödeme Vadesi</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                </div>
+                <div class="col-xs-8 info-right">
+                    @*TODO:ödeme bilgileri gelecek*@
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>Ödeme Şekli</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                </div>
+                <div class="col-xs-8 info-right">
+                    @*TODO:ödeme bilgileri gelecek*@
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-3 info-left">
+                    <span>Diğer</span>
+                </div>
+                <div class="col-xs-1 double-dot">
+                </div>
+                <div class="col-xs-8 info-right">
+                    @*TODO:ödeme bilgileri gelecek*@
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                İşbu sözleşmede belirlenen fiyat Kiracının kullanım taahhüdü nedeniyle verilmiş olup, kullanım taahhüdünün Kiracı tarafından haklı bir sebep olmadan yerine getirilmemesi ve/veya sözleşmenin süresinden önce Kira’dan kaynaklanan sebeplerle sona ermesi halinde, sona erme tarihine kadar yapılan kullanımlara %20 birim fiyat farkı uygulanır. Kiracı bu sebeple sona erme hallerinde birim fiyat uygulanacağını ve buna herhangi bir itirazı olamadığını kabul ve taahhüt eder.
+            </p>
+        </div>
+        <div class="break-after">
+
+        </div>
+        <div class="break-before">
+
+        </div>
+        <div class="contract-title col-xs-12 double-margin">
+            <span>BÖLÜM B ÇALIŞMA KOŞULLARI</span>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                1. Rezervasyon İşlemleri
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                1.1.  Kesin Rezervasyon
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                Rezervasyonu yapılan ürün ve bütçenin müşteri tarafından yazılı veya e-mail olarak onaylanmasının ardından “Kesin Rezervasyon” yapılmış sayılır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                1.2. Rezervasyon İptalleri
+            </p>
+        </div>
+        <div class="col-xs-12 contract-list">
+            <ul>
+                <li>Kesin rezervasyon iptali tüm ürünlerde asım gününden önceki son 16 iş gününe kadar yapılabilir.</li>
+                <li>Kampanyaların asım gününden önceki 15-11 iş gününde iptali halinde kesinleştirilmiş bütçenin %25’i,</li>
+                <li>Kampanyaların asım gününden önceki 10-6 iş gününde iptali halinde kesinleştirilmiş bütçenin %50’si,</li>
+                <li>Kampanyaların asım gününden önceki 5-1 iş gününde iptali halinde kesinleştirilmiş bütçenin %75’i,</li>
+                <li>Kampanyaların asım gününden önceki son iş gününde iptali halinde kesinleştirilmiş bütçenin %100’ü fatura edilir.</li>
+            </ul>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                1.3. Opsiyonlu Rezervasyon
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                Opsiyonlar, teklif tarihinden itibaren 1 hafta geçerlidir. Bu tarihten sonra verilen yer listesi ve adetlerle ilgili yer ve adet garantisi verilmez.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text double-margin">
+            <p>
+                2. Reklam Görselinin Özellikleri
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                2.1. Reklam materyalinin baskıya girmeden 48 saat önce jpeg olarak reklam sektör sorumlusuna gönderilmesi gerekmektedir.
+                Kurumumuz Reklam Özdenetim Kurumu kurallarına uymayı taahhüt etmiştir.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                2.2. Özel bir asım şekli varsa, Müşteri bunu şatış sorumlusuna görseliyle birlikte belirtilen afiş teslim tarihlerine kadar yazılı olarak açıklamalıdır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                2.3. Kampanyada cut-out/yaratıcı (ambient) uygulama yapacaksa bunun teknik onayı Sisus Reklamcılıktan alınmalıdır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text double-margin">
+            <p>
+                3. Baskı Özellikleri
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                3.1. City Lights Poster – CLP
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                Bu özelliklere sahip kağıdın kullanılmaması durumunda afişler kolayca kırışmakta ve yırtılmaktadır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                3.2. Billboard – BB
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                Billboard afişlerinin 440 gr frontlit lamine vinil özelliğine sahip olması gerekir.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                Baskı aşamasında açıkhava reklamcılığı için özel olarak üretilen matbaa boyaları kullanılmalıdır. Bu özelliklere sahip vinil ve boyaların kullanılmaması durumunda; afişler uygulama sırasında kolayca kırışmakta ve yırtılmaktadır. Afişler belirtilen ölçülerde sıfır kesilmelidir, tek parça olarak baskı yapılması zorunludur. Görsel kaybın önlenmesi için ölçülere dikkat edilmelidir.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                3.3. Megalight – ML
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                Megalight afişlerinin 510 gr. Backlight vinil özelliğine sahip olması gerekmektedir. Tek parça olarak baskı yapılması zorunludur. Baskı tekniği olarak dijital baskı yapılmalıdır. Afişler sıfır kesilmemelidir, verilen ölçüler haricinde 4 kenardan +5 cm germe payı bırakılmalıdır. Görsel kaybının önlenmemesi için ölçülere dikkat edilmelidir.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                3.4. Diğer Ürünler
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                Diğer ürünlerin baskı bilgisi için Satış ekibinden bilgi alınması gerekmektedir.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                Yukarıda özelliklerini belirttiğimiz baskı malzemeleri biçimlerinin dışında baskı biçimi kullanılmasından doğabilecek zararlardan dolayı sorumluluk kabul edilmez.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text double-margin">
+            <p>
+                4. Bütçe ve Ödeme Koşulları
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.1.Baskı ve uygulama bedelleri kira bedeli haricinde uygulanmaktadır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.2. Baskı ve uygulama bedelleri ürün tip ve özelliklerine göre farklılık göstermektedir. Fiyatlar hakkında ilgili satış temsilcisinden bilgi alınmalıdır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.3. Her ürünün afiş asım ve değiştirilmesinde baskı ve uygulama ücreti alınır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.4. Özel Uygulamalarda baskı ve uygulama fiyatları farklılık gösterdiğinden ilgili satış temsilcisinden bilgi alınmalıdır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.5. Tüm ürünlerde asım gününden önce sözleşme şartlarına göre ödeme alınmış olmalıdır. Aksi takdirde Hizmet Veren asımı yapmama hakkını saklı tutar.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.6. Zamanında ödenmeyen faturalara T.C. Merkez Bankası’nın ticari işlere uyguladığı reeskont faizi uygulanır.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.7. Fiyatlara prodüksiyon dahil değildir.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.8. Fiyatlara ilan ve reklam vergileri dahil, prodüksiyon ve KDV hariçtir. Güncel ödeme koşulları için satış departmanımız ile temasa geçilmelidir.
+            </p>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <p>
+                4.9. Sisus Reklamcılık fiyat tarifesi ve çalışma koşullarında değişiklik yapma hakkı saklıdır.
+            </p>
+        </div>
+        <div class="break-after">
+
+        </div>
+        <div class="break-before">
+
+        </div>
+        <div class="contract-title col-xs-12 double-margin">
+            <span>BÖLÜM C GENEL HÜKÜMLER</span>
+        </div>
+        <div class="col-xs-12 contract-text">
+            <ol class="col-xs-12 clause-list">
+                <li>
+                    Hizmet alan, yukarıda yer alan Hizmet @Model.Offer.Customer.Name reklamını yapmayı, İşbu Reklam Yeri Hizmet Kullanım Koşulları çerçevesinde doğan haklarını başkasına devir temlik etmeyeceğini ve karşılığında Bölüm A’da yer alan özel hükümlerde belirtilen ödemeyi yapacağını kabul, beyan ve taahhüt etmiştir.
+                </li>
+                <li>
+                    Ürünlere asılacak reklam materyalinin hazırlanması ve temil edilmesi Hizmet Alan’a ait olacak olup, uygulaması ve her türlü belediye rüsum ve vergileri Hizmet Veren tarafından karşılanacaktır.
+                </li>
+                <li>
+                    Ürünler üzerine reklam materyalini takma, indirme, değiştirme vs. her türlü işlem ve değişiklikler İşbu Reklam Yeri Hizmet Kullanım Koşulları B bölümünde yer alan Çalışma Koşulları çerçevesinde münhasıran Sisus Reklamcılık Tur. Org. Hiz. San. Tic. Ltd. Şti. tarafından yapılır. Hizmet Alan ürünlere hiçbir hal ve şekilde doğrudan fiili müdahalede bulunamaz.
+                </li>
+                <li>
+                    Hizmet Alan, ürünlerde yer alacak reklam materyallerinde IAA (International Advertising Associatian) ile Reklam Özdenetim Kurulu’nca uygulanan/uygulanacak reklam ve ahlak ilkeleri, yürürlükteki TC. Kanunları, Tüzükleri, Yönetmelikleri, Kanun hükümde Kararnameleri ile Belediyeler veya ilgili resmi kurum ve makamlarca belirlenen tüm kısıtlamalara ve yasaklara uymayı ve kabul, beyan ve taahhüt eder. Hizmet Alan, mevzuata veya genel ahlak ve adaba aykırı reklam vermeyeceğini ve bu tür reklam yapmaktan doğacak her türlü hukuki, cezai ve mali sorumluluğun kendisinden olduğunu ve ayrıca Hizmet Veren’in, bu yüzden uğrayabileceği her türlü zararı derhal tazmin edeceğini kabul ve taahhüt eder. Bu tür bir ayrılık durumunda Hizmet Veren, reklam materyallerini, Hizmet Alan’a haber vermek şartıyla, kampanya müddetinin hitamını beklemeksizin ve hiçbir ücret iadesi ya da tazminat ödemeksizin kaldırabilir.
+                </li>
+                <li>
+                    Belediyeler, Karayolları veya diğer kamu kuruluşları ve üçüncü kişiler tarafından reklam asılacak ürünlerden bazılarının bulunduğu yerden kaldırılması, taşınması veya herhangi bir şekilde amacına uygun kullanılmayacak hale getirilmesi halinde Hizmet Alan, aynı reklamın kalan müddeti kadar süre için Hizmet Veren tarafından benzer mahalde başka ürünlere asılmasını kabul eder.
+                </li>
+                <li>
+                    İşbu Reklam Yeri Hizmet Kullanım Koşulları’nda belirtilmiş ödeme takviminde yazılı taksitlerden ilk taksitin vadesinde ödenmemesi halinde tüm bakiye taksitler muaccel olur. Ödemelerin vadesinde yapılmaması halinde T.C. Merkez Bankası’nın ticari işlere uyguladığı reeskont faizi uygulanır. Taksitlerin zamanında ödenmemesi durumunda Hizmet Veren, ödeme yapılıncaya kadar verdiği hizmeti durdurma hakkını saklı tutar.
+                </li>
+                <li>
+                    Çek ile yapılacak ödemeler için Hizmet Alan Kredi Kayıt Bürosu Çek Raporunu, çek dışında kalan vadeli ödemeler için ise Kredi Kayıt Bürosu Risk Raporunu İşbu Sözleşme ekinde Hizmet Veren’e verecektir. Bu belgelerin sözleşmenin imzalanması sırasında sunulması zorunludur. Hizmet Veren tarafından raporun değerlendirmesi sonucu Hizmet Alan’ın ödeme güçlüğü içinde bulunduğunun tespiti veya sözleşmenin imzalanmış olmasına rağmen Hizmet Alan Kredi Kayıt Bürosu Çek Raporu veya Kredi Kayıt Bürosu Risk Raporunun sunulmamış olması halinde, Hizmet Veren dilediği zaman, herhangi bir ihbara ve tazminata gerek olmaksızın, tek taraflı olarak sözleşme konusu asımı yapıp yapmamakta serbesttir.
+                </li>
+                <li>
+                    İşbu Reklam Yeri Hizmet Kullanım Koşulları’nın tarafları, diğer tarafın yazılı izni olmaksızın, hakkında bildiği ya da çalışmaları sırasında öğrendiği diğer tarafın veya kuruluşların veya bunların sahip ve yöneticilerinin işleri, hesapları, mali durumları, mesleki sırları, faaliyetleri, anlaşmaları, işlemleri veya menfaatlerine ilişkin herhangi bir bilgiyi üçüncü kişiye açıklamamayı ve açıklamasına olanak tanımamayı, buları bizzat dahi kullanmamayı kabul ve taahhüt ederler.
+                </li>
+                <li>
+                    Reklam Yeri Hizmet Kullanım Koşulları’nın A Bölümünde yer alan Hizmet Dönemi ve/veya Ürün adet sayısının değiştirilmesi durumunda da B Bölüm Hükümleri geçerli olmaya devam edecektir.
+                </li>
+                <li>
+                    Bölüm A’da belirtilmiş olan hizmet bedeline ilişkin nakit ödemeler, SİSUS REKLAMCILIK TURİZM ORGANİZASYON HİZMETLERİ SAN. TİC. LTD. ŞTİ. – GARANTİ BANKASI / İSTANBUL ÜMRANİYE ŞUBESİ (165) IBAN: TR07 0006 2000 1650 0006 2975 92 hesaba yapılacaktır.
+                </li>
+                <li>
+                    Yukarıda belirtilen adresler, tarafların resmi tebligat adresidir. Yazılı olarak yapılmış adres değişikliği yokluğunda yukarıdaki adreslere yapılacak her türlü tebligat geçerli sayılacaktır. Faks ve elektronik posta yoluyla yapılan bildirimler taraflar arasında 6100 s. Hukuk Mahkemeleri Kanunu m. 193 uyarınca delil teşkil eder. TTK m. 18/(3) hükümleri saklıdır.
+                </li>
+                <li>
+                    Taraflar arasında İşbu Reklam Yeri Hizmet Kullanım Koşulları’nın yorumlanmasından ve uygulanmasından doğacak her türlü ihtilafın hal ve mercii İzmir Mahkemeleri ve İcra Daireleridir.
+                </li>
+                <li>
+                    İşbu Reklam Yeri Hizmet Kullanım Koşulları’nın düzenlenmesinden ve uygulamasından ötürü yürürlükteki ve ileride yürürlüğe girecek mevzuat hükümleri gereğince tahakkuk edebilecek her türlü vergi, harç, fon ve sair yasal mali yükümlülükler ve bunlara ilişkin zam, ceza ve ilaveler Hizmet Alan’a aittir.
+                </li>
+            </ol>
+        </div>
+        <div class="col-xs-12 signature-container">
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <span>HİZMET ALAN</span>
+                </div>
+                <div class="col-xs-6">
+                    <span>HİZMET VEREN</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <span>KİRACI</span>
+                </div>
+                <div class="col-xs-6">
+                    <span>KİRALAYAN</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <span>@Model.Offer.Customer.Name</span>
+                </div>
+                <div class="col-xs-6">
+                    <span>SİSUS REKLAMCILIK TURİZM ORGANİZASYON HİZMETLERİ SAN. TİC. LTD. ŞTİ.</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <span>TARİH @DateTime.Now.ToShortDateString()</span>
+                </div>
+                <div class="col-xs-6">
+                    <span>TARİH @DateTime.Now.ToShortDateString()</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <span>İMZA</span>
+                </div>
+                <div class="col-xs-6">
+                    <span>İMZA</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="@(cdnUrl)js/jquery-1.11.0.min.js?@version"></script>
+    <script>
+
+    </script>
+</body>
+</html>

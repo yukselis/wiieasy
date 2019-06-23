@@ -1,0 +1,226 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.FilterProductModel
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles
+{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/select2/css/select2.min.css?@version">
+    <style>
+        tr.selected {
+            background-color: rgba(0, 255, 0, 0.33) !important;
+        }
+
+        .table-striped > tbody > tr.selected:nth-child(odd) > td, .table-striped > tbody > tr.selected:nth-child(odd) > th {
+            background-color: rgba(0, 255, 0, 0.33) !important;
+        }
+
+        .table-hover > tbody > tr.selected:hover > td, .table-hover > tbody > tr.selected:hover > th {
+            background-color: rgba(0, 255, 0, 0.1) !important;
+        }
+
+        .filter-form {
+            clear: both;
+            margin-top: 0px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+        }
+
+        .filter-textbox {
+            background-color: white;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            height: 32px;
+        }
+
+        .filter-checkbox {
+            float: left;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .filter-button {
+            margin-top: 5px;
+        }
+
+        .col-lg-3 .select2-container {
+            width: 100% !important;
+        }
+    </style>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            @if (!Model.ShowOnlyProducts)
+            {
+                <div class="portlet-body col-lg-12 no-padding">
+                    @using (Html.BeginForm("FilterProductList", "Content", null, FormMethod.Post, new {@class = "filter-form form-horizontal pull-left col-lg-12", @id = "page-detail-form", enctype = "multipart/form-data"}))
+                    {
+                        <div class="col-lg-12">
+                            <div class="col-lg-3">
+                                <span>@Model.TimeRange.StartTime.ToShortDateString() - @Model.TimeRange.EndTime.ToShortDateString()</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span class="col-lg-12 no-padding">
+                                    Semtler
+                                </span>
+                                <select class="type-select col-lg-12" name="SelectedCounties[]" multiple="multiple">
+                                    @foreach (var item in Model.CountyList)
+                                    {
+                                        if (item.Selected)
+                                        {
+                                            <option value="@item.Value" selected="selected">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <span class="col-lg-12 no-padding">
+                                    Ürün Tipleri
+                                </span>
+                                <select class="type-select col-lg-12" name="ProductTypes[]" multiple="multiple">
+                                    @foreach (var item in Model.ProductTypeList)
+                                    {
+                                        if (item.Selected)
+                                        {
+                                            <option value="@item.Value" selected="selected">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <span class="col-lg-12 no-padding">
+                                    Sıralı ürün sayısı
+                                </span>
+                                <input class="col-lg-12 filter-textbox" type="text" value="@(Model.IsOrderedProductCount == 0 ? 1 : Model.IsOrderedProductCount)" name="IsOrderedProductCount"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-3">
+                                <span class="filter-checkbox passive">
+                                    @Html.CheckBoxFor(model => model.ExcludeOptions)
+                                    Müşteriye Opsiyon Bilgisi Gösterme
+                                </span>
+                                <span class="filter-checkbox passive">
+                                    @Html.CheckBoxFor(model => model.ShowSortOrder)
+                                    Müşteriye Asım Sırasını Göster
+                                </span>
+                                <span class="filter-checkbox passive">
+                                    @Html.CheckBoxFor(model => model.ShowPrice)
+                                    Müşteriye Fiyatları Göster
+                                </span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span class="col-lg-12 no-padding">
+                                    Bölgeler
+                                </span>
+                                <select class="type-select col-lg-12" name="SelectedProvinces[]" multiple="multiple">
+                                    @foreach (var item in Model.ProvinceList)
+                                    {
+                                        if (item.Selected)
+                                        {
+                                            <option value="@item.Value" selected="selected">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-3 pull-right">
+                                <input type="submit" value="Filtrele" class="filter-button btn btn-primary col-lg-12"/>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(m => m.OfferId)
+                        @Html.HiddenFor(m => m.ID)
+                        @Html.HiddenFor(m => m.CustomerAddress)
+                        @Html.HiddenFor(m => m.StatusID)
+                        @Html.HiddenFor(m => m.RowGuid)
+                        @Html.HiddenFor(m => m.TimeRange.StartTime)
+                        @Html.HiddenFor(m => m.TimeRange.EndTime)
+                    }
+                </div>
+            }
+            
+            @Html.TableFor(m => Model.Products, allowNew: false)
+
+            @if (!Model.ShowOnlyProducts)
+            {
+                <a id="add-subcategory" class="btn btn-primary btn-small col-md-12 col-xs-12" href="#" title="Ürün ekle" onclick="AddProductsToOffer('@Model.OfferId')" style="position: fixed; bottom: 60px; width: 80vw;"><span>Ürünleri Yer listesine ekle&nbsp;<i class="fa fa-plus"></i></span></a>
+                <script>
+                    var addProducts = true;
+                </script>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script src="@(cdnUrl)js/jquery.validate.unobtrusive.js?@version"></script>
+    <script src="@(cdnUrl)vendors/moment/moment.js?@version"></script>
+    <script src="@(cdnUrl)vendors/select2/js/select2.min.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.dataTables.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/dataTables.bootstrap.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.jeditable.js?@version"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".type-select").select2();
+            var productsTable = $('#product-list').dataTable({
+                "aoColumnDefs": [{ "aTargets": [0, 6, 7, 12, 13], "bVisible": false }, { "aTargets": [3], "sWidth": "10%" }, { "aTargets": [4], "sWidth": "60px" }, { "aTargets": [10], "bVisible": false, "bSearchable": false, "bSortable": false, "sWidth": "77px" }],
+                "bAutoWidth": false,
+                "iDisplayLength": 100,
+                "bPaginate": false
+            });
+            editingTables["Product"] = productsTable;
+        });
+
+        function AddProductsToOffer(id) {
+            $.Arwend.Ajax.Parameters = {
+                Action: "addproductstooffer",
+                products: $("#product-list tr.selected").map(function () { return $(this).attr("data-id"); }).get().join(";"),
+                offerid: id,
+                showSortOrder: $(".show-sortorder-checkbox:checked").length > 0,
+                showPrice: $(".show-price-checkbox:checked").length > 0
+            };
+            $.Arwend.Ajax.GetResponse(function (response) {
+                swal({
+                    title: "Yer listesi bağlantısı hazır!",
+                    text: "Emaili oluşturmak için butona basınız.",
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Tamam",
+                    closeOnConfirm: true,
+                    html: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            window.open("mailto:@Model.CustomerAddress?body=http://adminegemedya.site/CustomerOffer/" + id, "_blank");
+                        }
+                    });
+            }, false, true);
+        }
+
+        if (typeof addProducts !== 'undefined' && addProducts) {
+            $('table tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
+        }
+
+    </script>
+
+}

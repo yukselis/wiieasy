@@ -1,0 +1,65 @@
+﻿@using Arwend;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Home.IndexModel
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/datatables/css/jquery.dataTables.css?@version">
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/datatables/css/dataTables.bootstrap.css?@version">
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            @if (Model.LastestLoggedInUsers?.Items != null && Model.LastestLoggedInUsers.Items.Any())
+            {
+                <div class="col-lg-6">
+                    @Html.TableFor(m => Model.LastestLoggedInUsers.Items)
+                </div>
+            }
+            @if (Model.AvailableProducts?.Items != null && Model.AvailableProducts.Items.Any())
+            {
+                <div class="col-lg-6">
+                    @Html.TableFor(m => Model.AvailableProducts.Items)
+                </div>
+            }
+            @if (Model.RemainingOffers?.Items != null && Model.RemainingOffers.Items.Any())
+            {
+                <div class="col-lg-6">
+                    @Html.TableFor(m => Model.RemainingOffers.Items)
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.dataTables.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/dataTables.bootstrap.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.jeditable.js?@version"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var userloginlogTable = $('#userloginlog-list').dataTable({
+                "aoColumnDefs": [{ "aTargets": [1], "sWidth": "70px" }, { "aTargets": [0,3], "bVisible": false }],
+                "iDisplayLength": 100,
+                "bPaginate": false,
+                "bFilter": false
+            });
+            editingTables["UserLoginLog"] = userloginlogTable;
+            var availableproductlogTable = $('#availableproductlog-list').dataTable({
+                "aoColumnDefs": [{ "aTargets": [1], "sWidth": "70px" }, { "aTargets": [0], "bVisible": false }],
+                "iDisplayLength": 100,
+                "bPaginate": false,
+                "bFilter": false
+            });
+            editingTables["AvailableProductLog"] = availableproductlogTable;
+            var remainingofferTable = $('#remainingoffer-list').dataTable({
+                "aoColumnDefs": [{ "aTargets": [1], "sWidth": "70px" }, { "aTargets": [0,2], "bVisible": false }],
+                "iDisplayLength": 100,
+                "bPaginate": false,
+                "bFilter": false
+            });
+            editingTables["RemainingOffer"] = remainingofferTable;
+        });
+    </script>
+}

@@ -1,0 +1,466 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.OfferModel
+
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+    int totalPrice = 0;
+    int i = 0;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="@ConfigurationManager.Language" lang="@ConfigurationManager.Language">
+
+<head>
+    <title>@(ViewBag.Title ?? "Genel Bakış") | Ege Medya Yönetim Paneli</title>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1254" />
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-9" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta content="text/html; charset=x-mac-turkish" http-equiv="content-type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=1.0, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/bootstrap/css/bootstrap.min.css?@version" />
+    <style>
+        @@media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            .print-only {
+                display: block !important;
+            }
+
+            .hide-print {
+                display: none !important;
+            }
+        }
+
+        .print-only {
+            display: none;
+        }
+
+        .hide-print {
+            display: block;
+        }
+
+        .full-width {
+            float: left;
+            width: 100%;
+        }
+
+        .border-left {
+            border-left: 1px inset #292929;
+            box-sizing: border-box;
+        }
+
+        .border-right {
+            border-right: 1px inset #292929;
+            box-sizing: border-box;
+        }
+
+        .border-top {
+            border-top: 1px inset #292929;
+            box-sizing: border-box;
+        }
+
+        .border-bottom {
+            border-bottom: 1px inset #292929;
+            box-sizing: border-box;
+        }
+
+        .logo-container img {
+            width: 200px;
+            margin-top: 50px;
+            margin-left: 20px;
+        }
+
+        .offer-title-container {
+            background-color: #bc3744 !important;
+            -webkit-print-color-adjust: exact !important;
+            height: 30px;
+            margin-top: 20px;
+            border: 1px solid #bc3744;
+        }
+
+            .offer-title-container span {
+                float: left;
+                width: 100%;
+                font-weight: bold;
+                text-align: center;
+                font-size: 16px;
+                font-family: calibri;
+                color: #fff;
+                line-height: 30px;
+            }
+
+        .columns-container {
+            background-color: #bc3744 !important;
+            -webkit-print-color-adjust: exact !important;
+            height: 30px;
+            margin-top: 20px;
+            padding: 0px;
+            border: 1px solid #bc3744;
+        }
+
+            .columns-container div {
+                padding: 0px;
+            }
+
+            .columns-container span {
+                float: left;
+                width: 100%;
+                font-weight: bold;
+                text-align: center;
+                font-size: 12px;
+                font-family: calibri;
+                color: #fff;
+                line-height: 30px;
+            }
+
+        .offeritem-container {
+            padding: 0px;
+        }
+
+        .offeritem {
+            padding: 0px;
+            height: 60px;
+        }
+
+            .offeritem div {
+                padding: 0px;
+            }
+
+            .offeritem span {
+                float: left;
+                width: 100%;
+                font-weight: bold;
+                text-align: center;
+                font-size: 11px;
+                font-family: calibri;
+                color: #292929;
+                line-height: 30px;
+            }
+
+            .offeritem .double-height {
+                height: 60px;
+            }
+
+                .offeritem .double-height span {
+                    line-height: 60px;
+                }
+
+            .offeritem .single-height {
+                height: 30px;
+            }
+
+                .offeritem .single-height span {
+                    line-height: 30px;
+                }
+
+        .total-price-row {
+            padding: 0px;
+        }
+
+            .total-price-row div {
+                padding: 0px;
+                height: 30px;
+            }
+
+            .total-price-row span {
+                float: left;
+                width: 100%;
+                font-weight: bold;
+                text-align: center;
+                font-size: 14px;
+                font-family: calibri;
+                color: #fff;
+                line-height: 30px;
+                background: #bc3744;
+            }
+
+        .offer-text-area {
+            margin-top: 50px;
+        }
+
+            .offer-text-area span {
+                float: left;
+                width: 100%;
+                font-weight: bold;
+                text-align: left;
+                font-size: 14px;
+                font-family: calibri;
+                color: #808080;
+                line-height: 18px;
+            }
+
+                .offer-text-area span.red-text {
+                    color: #ff0000;
+                }
+
+        .save-offer-layout {
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+            font-family: calibri;
+            color: #fff;
+            line-height: 30px;
+            background: #bc3744;
+        }
+
+        .offeritem input {
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+            font-family: calibri;
+            width: 100%;
+            float: left;
+        }
+    </style>
+</head>
+<body class="full-strech-background">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="logo-container full-width">
+            <img src="/Files/images/logo.png" />
+        </div>
+        <form class="table-container col-xs-12" action="/Content/OfferLayout" method="post">
+            <div class="offer-title-container col-xs-12">
+                <span>@Model.CustomerName TEKLİFİ</span>
+            </div>
+            <div class="columns-container col-xs-12">
+                <div class="col-xs-6">
+                    <div class="col-xs-3 border-right">
+                        <span>TARİH</span>
+                    </div>
+                    <div class="col-xs-4 border-right">
+                        <span>BÖLGE</span>
+                    </div>
+                    <div class="col-xs-2 border-right">
+                        <span>ÜRÜN</span>
+                    </div>
+                    <div class="col-xs-3 border-right">
+                        <span>ASIM GÜNÜ</span>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="col-xs-1 border-right">
+                        <span>ADET</span>
+                    </div>
+                    <div class="col-xs-1 border-right">
+                        <span>FACE</span>
+                    </div>
+                    <div class="col-xs-1 border-right">
+                        <span>SÜRE</span>
+                    </div>
+                    <div class="col-xs-1 border-right">
+                        <span>DÖNEM</span>
+                    </div>
+                    <div class="col-xs-4 border-right">
+                        <span>GÖRÜNÜR ALAN ÖLÇÜ</span>
+                    </div>
+                    <div class="col-xs-2 border-right">
+                        <span>BİRİM FİYAT</span>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>TOPLAM FİYAT</span>
+                    </div>
+                </div>
+            </div>
+            <div class="offeritem-container col-xs-12">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="offeritem col-xs-12 border-left border-bottom border-right">
+                        <div class="col-xs-6 double-height">
+                            <div class="col-xs-3 border-right">
+                                <span>@item.TimeRange.StartTime.ToShortDateString() - @item.TimeRange.EndTime.ToShortDateString()</span>
+                            </div>
+                            <div class="col-xs-4 border-right">
+                                <span>@item.Products.First().County</span>
+                            </div>
+                            <div class="col-xs-2 border-right">
+                                <span>@item.Products.First().Type.ToStringValue()</span>
+                            </div>
+                            <div class="col-xs-3 border-right">
+                                <span>@Model.CurrentCulture.DateTimeFormat.GetDayName(item.Products.First().HangDay)</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="col-xs-12 single-height border-bottom">
+                                <div class="col-xs-1 border-right">
+                                    <span>@item.Products.Count</span>
+                                </div>
+                                <div class="col-xs-1 border-right">
+                                    <span class="print-only">@item.FaceCount</span>
+                                    <input type="text" name="Items[@i].FaceCount" value="@item.FaceCount" onchange="CalculateFaceCount(this);" class="hide-print" />
+                                </div>
+                                <div class="col-xs-1 border-right">
+                                    <span>@item.Duration</span>
+                                </div>
+                                <div class="col-xs-1 border-right">
+                                    <span>@item.Products.First().PriceRange.ToStringValue()</span>
+                                </div>
+                                <div class="col-xs-4 border-right">
+                                    <span>@item.Products.First().DimensionX x @item.Products.First().DimensionY</span>
+                                </div>
+                                <div class="col-xs-2 border-right">
+                                    <span class="print-only">@item.UnitPrice ₺</span>
+                                    <input type="text" name="Items[@i].UnitPrice" value="@item.UnitPrice" onchange="CalculateTotalPrice(this);" class="hide-print" />
+                                </div>
+                                <div class="col-xs-2">
+                                    <span class="print-only">@item.TotalPrice ₺</span>
+                                    <input type="text" name="Items[@i].TotalPrice" value="@item.TotalPrice" onchange="CalculateUnitPrice(this);" class="item-total-price hide-print" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 single-height">
+                                <div class="col-xs-1 border-right">
+                                    <span>@item.Products.Count</span>
+                                </div>
+                                <div class="col-xs-1 border-right">
+                                    <span class="ordino-facecount">@item.FaceCount</span>
+                                </div>
+                                <div class="col-xs-6 border-right">
+                                    <span>Baskı ve Operasyonel</span>
+                                </div>
+                                <div class="col-xs-2 border-right">
+                                    <span class="print-only ordino-unitprice">@item.UnitPrintPrice ₺</span>
+                                    <input type="text" name="Items[@i].UnitPrintPrice" value="@item.UnitPrintPrice" onchange="CalculateTotalPrintPrice(this);" class="hide-print" />
+                                </div>
+                                <div class="col-xs-2">
+                                    <span class="print-only ordino-totalprice">@item.TotalPrintPrice ₺</span>
+                                    <input type="text" name="Items[@i].TotalPrintPrice" value="@item.TotalPrintPrice" onchange="CalculateUnitPrintPrice(this);" class="item-total-print-price hide-print" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @Html.HiddenFor(m => m.Items[i].Description)
+                    @Html.HiddenFor(m => m.Items[i].Duration)
+                    @Html.HiddenFor(m => m.Items[i].EndTime)
+                    @Html.HiddenFor(m => m.Items[i].StartTime)
+                    @Html.HiddenFor(m => m.Items[i].UnitPrintPrice)
+                    @Html.HiddenFor(m => m.Items[i].UsageType)
+                    @Html.HiddenFor(m => m.Items[i].ID)
+                    @Html.HiddenFor(m => m.Items[i].RowGuid)
+                    @Html.HiddenFor(m => m.Items[i].StatusID)
+                    i = i + 1;
+                }
+                <div class="total-price-row col-xs-12">
+                    <div class="col-xs-6">
+
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="col-xs-12">
+                            <div class="col-xs-1">
+
+                            </div>
+                            <div class="col-xs-1">
+
+                            </div>
+                            <div class="col-xs-6">
+
+                            </div>
+                            <div class="col-xs-2">
+
+                            </div>
+                            <div class="col-xs-2 border-left border-bottom border-right">
+                                <span class="total-price">@Model.TotalPrice ₺</span>
+                                <input type="hidden" value="@Model.TotalPrice" class="total-price-input" name="TotalPrice" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.CustomerName)
+            @Html.HiddenFor(model => model.CustomerId)
+            @Html.HiddenFor(model => model.StatusID)
+            @Html.HiddenFor(model => model.Name)
+            @Html.HiddenFor(model => model.Description)
+            @Html.HiddenFor(model => model.OfferStatus)
+            @Html.HiddenFor(model => model.RowGuid)
+            @Html.HiddenFor(model => model.ID)
+            <div class="col-xs-12 hide-print" style="padding: 0px;">
+                <input type="submit" value="KAYDET" class="save-offer-layout col-xs-3 pull-right" />
+            </div>
+        </form>
+        <div class="offer-text-area col-xs-12">
+            <span>*Yukarıdaki fiyatlara KDV dahil değildir.</span>
+            <span>*Yukarıdaki fiyatlar 31 Ağustos 2017 tarihine kadar geçerlidir.</span>
+            <span>*Baskı adeti +%10 fire payı dahil edilerek hesaplanmıştır.</span>
+            <span>*BB min. 20 face, CLP min. 50 face kullanılmaktadır.</span>
+            <span>*ADML ön ve arka yüzünde max. 3'er firma yer alabilmektedir.</span>
+            <span class="red-text">***BB baskı; vinyl</span>
+            <span class="red-text">***ADML baskı ; fiber mark</span>
+            <span class="red-text">***CLP baskı ; City Light</span>
+        </div>
+    </div>
+    <script src="@(cdnUrl)js/jquery-1.11.0.min.js?@version"></script>
+    <script>
+        function CalculateTotalPrice(e) {
+            var unitPrice = parseInt($(e).val());
+            var faceCount = parseInt($(e).parent().prev().prev().prev().prev().find("input").val());
+            var duration = parseInt($(e).parent().prev().prev().prev().find("span").html());
+            $(e).parent().next().find("input").val(faceCount * unitPrice * duration);
+            $(e).parent().next().find("span").html((faceCount * unitPrice * duration) + " ₺");
+            $(e).prev().html($(e).val() + " ₺");
+            CalculatePrice();
+        }
+
+        function CalculateUnitPrice(e) {
+            var itemTotalPrice = parseInt($(e).val());
+            var faceCount = parseInt($(e).parent().prev().prev().prev().prev().prev().find("input").val());
+            var duration = parseInt($(e).parent().prev().prev().prev().prev().find("span").html());
+            $(e).parent().prev().find("input").val(Math.ceil((itemTotalPrice / duration) / faceCount));
+            $(e).parent().prev().find("span").html(Math.ceil((itemTotalPrice / duration) / faceCount) + " ₺");
+            $(e).prev().html($(e).val() + " ₺");
+            CalculatePrice();
+        }
+
+        function CalculateTotalPrintPrice(e) {
+            var unitPrice = parseInt($(e).val());
+            var faceCount = parseInt($(e).parent().prev().prev().find("span").html());
+            $(e).parent().next().find("input").val(faceCount * unitPrice);
+            $(e).parent().next().find("span").html((faceCount * unitPrice) + " ₺");
+            $(e).prev().html($(e).val() + " ₺");
+            CalculatePrice();
+        }
+
+        function CalculateUnitPrintPrice(e) {
+            var itemTotalPrice = parseInt($(e).val());
+            var faceCount = parseInt($(e).parent().prev().prev().prev().find("span").html());
+            $(e).parent().prev().find("input").val(Math.ceil(itemTotalPrice / faceCount));
+            $(e).parent().prev().find("span").html(Math.ceil(itemTotalPrice / faceCount) + " ₺");
+            $(e).prev().html($(e).val() + " ₺");
+            CalculatePrice();
+        }
+
+        function CalculateFaceCount(e) {
+            var faceCount = parseInt($(e).val());
+            var unitPrice = parseInt($(e).parent().next().next().next().next().find("input").val());
+            var duration = parseInt($(e).parent().next().find("span").html());
+            var ordinoUnitPrice = parseInt($(e).parent().parent().next().find(".ordino-unitprice").html().split(' ')[0]);
+            var ordinoFaceCount = faceCount;
+            $(e).parent().next().next().next().next().next().find("input").val(faceCount * unitPrice * duration);
+            $(e).parent().next().next().next().next().next().find("span").html((faceCount * unitPrice * duration) + " ₺");
+            $(e).prev().html($(e).val());
+            $(e).parent().parent().next().find(".ordino-facecount").html(ordinoFaceCount);
+            $(e).parent().parent().next().find(".ordino-totalprice").html((ordinoFaceCount * ordinoUnitPrice) + " ₺");
+            CalculatePrice();
+        }
+
+        function CalculatePrice() {
+            var total = 0;
+            $(".item-total-price").each(function () {
+                total += parseInt($(this).val());
+            });
+            $(".ordino-totalprice").each(function () {
+                total += parseInt($(this).html().split(' ')[0]);
+            });
+            $(".total-price").html(total + " ₺");
+            $(".total-price-input").val(total);
+        }
+    </script>
+</body>
+</html>

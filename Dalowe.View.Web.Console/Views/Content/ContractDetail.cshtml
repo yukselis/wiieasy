@@ -1,0 +1,105 @@
+﻿@using Arwend;
+@using Arwend.Web.View.Mvc.Html;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Dalowe.View.Web.Framework.Models.Content.ContractModel
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles
+{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload-ui.css?@version" />
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/jquery-file-upload/css/jquery.fileupload.css?@version" />
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet">
+                <div class="portlet-header">
+                    <div class="caption">@(Model.IsNew ? "Yeni Sözleşme oluştur" : Model.Offer.Name)</div>
+                </div>
+                <div class="portlet-body col-md-12">
+                    @using (Html.BeginForm("ContractDetail", "Content", null, FormMethod.Post, new { @class = "form-horizontal", @id = "page-detail-form", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-body pal">
+                            @Html.ValidationSummary(true)
+                            <div class="col-md-9 col-xs-12">
+                                @Html.StatusFor(model => model.StatusID)
+                                @Html.TextFieldFor(model => model.Description)
+                                @Html.TextFieldFor(model => model.ContractNo)
+                                @Html.ContractStatusFor(model => model.ContractStatus)
+                                <div class="form-group">
+                                    <div class="col-md-3 text-right-o">
+                                        <label class="control-label">Teklif</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <a class="btn btn-primary btn-small mls" href="@Url.Action("OfferDetail", "Content", new { id = Model.Offer.ID })" title="Teklif">
+                                            <span>Teklife git</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 text-right-o">
+                                        <label class="control-label">Ordino</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <a class="btn btn-primary btn-small mls" href="@Url.Action("OrdinoList", "Content", new { contractId = Model.ID })" title="Ordino">
+                                            <span>Ordinoları Görüntüle</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 text-right-o">
+                                        <label class="control-label">Ordino</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <a class="btn btn-primary btn-small mls" href="@Url.Action("OrdinoDetail", "Content", new { contractId = Model.ID })" title="Ordino">
+                                            <span>Yeni Ordino Oluştur</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                @if (!Model.IsNew)
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-3 text-right-o">
+                                            <label class="control-label">Yazdır</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <a class="btn btn-primary btn-small mls" href="@Url.Action("ContractLayout", "Content", new { id = Model.ID })" title="Yazdır">
+                                                <span>Yazdır</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (!Model.IsNew)
+                                {
+                                    <text>@Html.HistoryPanelFor(model => model.History)</text>
+                                }
+                                @Html.HiddenFor(model => model.RowGuid)
+                                @Html.HiddenFor(model => model.ID)
+                                @Html.ActionButtonsFor()
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script src="@(cdnUrl)js/jquery.validate.unobtrusive.js?@version"></script>
+    <script src="@(cdnUrl)vendors/moment/moment.js?@version"></script>
+    <script>
+                        //KindEditor.ready(function (K) {
+                        //    var options = {
+                        //        uploadJson: '../Files/vendors/kindeditor/asp.net/upload_json.ashx',
+                        //        fileManagerJson: '../Files/vendors/kindeditor/asp.net/file_manager_json.ashx',
+                        //        allowFileManager: true
+                        //    };
+                        //    window.editor = K.create('#Description');
+                        //});
+    </script>
+}

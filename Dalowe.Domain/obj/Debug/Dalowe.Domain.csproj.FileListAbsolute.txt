@@ -1,0 +1,17 @@
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\Dalowe.Domain.dll.config
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\Dalowe.Domain.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\Dalowe.Domain.pdb
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\Arwend.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\EntityFramework.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\EntityFramework.SqlServer.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\Newtonsoft.Json.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\Arwend.pdb
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\Arwend.dll.config
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\EntityFramework.xml
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\EntityFramework.SqlServer.xml
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\bin\Debug\Newtonsoft.Json.xml
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\obj\Debug\Dalowe.Domain.csprojAssemblyReference.cache
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\obj\Debug\Dalowe.Domain.csproj.CoreCompileInputs.cache
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\obj\Debug\Dalowe.Domain.csproj.CopyComplete
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\obj\Debug\Dalowe.Domain.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Domain\obj\Debug\Dalowe.Domain.pdb

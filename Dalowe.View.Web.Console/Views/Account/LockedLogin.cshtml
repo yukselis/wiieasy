@@ -1,0 +1,70 @@
+﻿@using Dalowe.View.Web.Framework.Helpers
+@model Dalowe.View.Web.Framework.Models.Account.LockedLoginModel
+@{
+    ViewBag.AnimationStyle = "slideInLeft";
+    ViewBag.Title = "Kullanıcı Girişi";
+    Layout = "~/Views/Shared/_AnonymousLayout.cshtml";
+    string cdnUrl = Arwend.ConfigurationManager.CdnUrl;
+    string version = Arwend.ConfigurationManager.ApplicationVersion;
+}
+
+<div id="lock-screen-content">
+    <img id="lock-screen-avatar" src="@Model.ProfileImagePath" alt="@Model.UserName" class="img-responsive img-circle img-bordered" style="margin-left: calc(50% - 32px);">
+    <div id="lock-screen-info">
+        <h1>@Model.FullName</h1>
+
+        <div class="email">@Model.EmailAddress</div>
+        @using (Html.BeginForm("LockedLogin", "Account", null, FormMethod.Post, new { @class = "form", @id = "locked-login-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.ReturnUrl)
+            @Html.HiddenFor(m => m.UserName)
+            @Html.HiddenFor(m => m.ProfileImagePath)
+            @Html.HiddenFor(m => m.FullName)
+            @Html.HiddenFor(m => m.EmailAddress)
+            <div class="input-group">
+                <div class="input-icon">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control validate sensitive-data", placeholder = "Şifre", autocomplete = "off" })
+                    <i class="fa fa-key"></i>
+                </div>
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">
+                        Giriş
+                        &nbsp;<i class="fa fa-chevron-circle-right"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="mtl"><a id="btn-forgot-pwd" href="@Url.Action("Login", "Account")" class="mlm"><i class="fa fa-users"></i> Kullanıcı Değiştir</a></div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script src="@(cdnUrl)vendors/jquery-validation/dist/jquery.validate.js?@version"></script>
+    <script type="text/javascript">
+        $(function () {
+            var validator = $("#locked-login-form").validate({
+                errorElement: 'span',
+                errorClass: 'help-block',
+                rules: {
+                    Password: { required: true }
+                },
+                messages: {
+                    Password: { required: "Lütfen şifrenizi giriniz!" },
+                },
+                highlight: function (element) {
+                    $(element).closest('.input-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.input-group').removeClass('has-error').addClass('has-success');
+                }
+            });
+            $("input.sensitive-data").val("");
+            @if (Model.AlertMessage != null && Model.AlertMessage.HasError) {
+                <text>
+                    validator.showErrors({ "Password": '@Model.AlertMessage.Message' });
+                </text>
+            }
+        });
+    </script>
+}
