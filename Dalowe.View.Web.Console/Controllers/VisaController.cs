@@ -63,7 +63,7 @@ namespace Dalowe.View.Web.Console.Controllers
                         //var password = Utility.GenerateRandomPassword(6);
                         //user.Password = password;
                         //user.LastVisitDate = DateTime.Now;
-                        Client.Services.API.Visa.InsertEntity(user);
+                        Client.Services.API.Visa.SaveUser(user);
                     }
                     else
                     {

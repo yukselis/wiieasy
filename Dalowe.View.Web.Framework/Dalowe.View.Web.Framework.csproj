@@ -108,7 +108,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\API\AccountApi.cs" />
     <Compile Include="Services\API\Base\BaseApi.cs" />
-    <Compile Include="Services\API\Base\ProxyRepository.cs" />
     <Compile Include="Services\API\Facade.cs" />
     <Compile Include="Services\API\LogApi.cs" />
     <Compile Include="Services\API\NotificationApi.cs" />
@@ -132,10 +131,6 @@
     <ProjectReference Include="..\Arwend\Arwend.csproj">
       <Project>{36dfbacb-73d4-4c14-b217-7d2f5a48e613}</Project>
       <Name>Arwend</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Dalowe.Data.Entity\Dalowe.Data.Entity.csproj">
-      <Project>{d45b67c6-2292-42fc-8d91-77a4a2808240}</Project>
-      <Name>Dalowe.Data.Entity</Name>
     </ProjectReference>
     <ProjectReference Include="..\Dalowe.Data\Dalowe.Data.csproj">
       <Project>{fee6e508-be47-47c0-bc33-d7e73c7f44af}</Project>

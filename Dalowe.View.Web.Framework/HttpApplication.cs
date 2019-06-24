@@ -1,6 +1,5 @@
 ﻿using System;
 using Arwend.Web;
-using Dalowe.Data.Entity;
 
 namespace Dalowe.View.Web.Framework
 {
@@ -18,7 +17,6 @@ namespace Dalowe.View.Web.Framework
 
         protected override void Application_EndRequest(object sender, EventArgs e)
         {
-            RepositoryFactory.Current.RefreshContext();
             base.Application_EndRequest(sender, e);
         }
     }

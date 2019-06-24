@@ -75,7 +75,7 @@ namespace Dalowe.View.Web.Console.Controllers.Base
         {
             var user = Client.Services.API.Visa.GetUser(id);
             if (user != null)
-                Client.Services.API.Visa.DeleteEntity(user);
+                Client.Services.API.Visa.DeleteUser(user);
         }
         private Entity GetEntity(SimpleEntityModel model)
         {

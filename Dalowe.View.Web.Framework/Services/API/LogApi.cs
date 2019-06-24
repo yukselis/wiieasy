@@ -16,38 +16,38 @@ namespace Dalowe.View.Web.Framework.Services.API
 
         public void CreateActionLog(string operation, string description, string action, string url, string parameters, long? userCreatedId = null)
         {
-            var repo = Repository<ActionLog>();
+            var actionLog = new ActionLog
+            {
+                Operation = operation,
+                Description = description,
+                Action = action?.Left(250),
+                Url = url,
+                Parameters = parameters,
+                IpAddress = HttpContext.Current.Request.GetUserHostAddress(),
+                SessionID = HttpContext.Current.Session?.SessionID,
+                MachineName = Environment.MachineName,
+                UserCreatedID = userCreatedId
+            };
 
-            var actionLog = repo.Create();
-            actionLog.Operation = operation;
-            actionLog.Description = description;
-            actionLog.Action = action?.Left(250);
-            actionLog.Url = url;
-            actionLog.Parameters = parameters;
-            actionLog.IpAddress = HttpContext.Current.Request.GetUserHostAddress();
-            actionLog.SessionID = HttpContext.Current.Session?.SessionID;
-            actionLog.MachineName = Environment.MachineName;
-            actionLog.UserCreatedID = userCreatedId;
-
-            InsertEntity(actionLog);
+            Add(actionLog);
         }
 
         public void CreateErrorLog(string moduleName, string function, string code, Exception exc, string note)
         {
-            var repo = Repository<ErrorLog>();
+            var errorLog = new ErrorLog
+            {
+                Module = moduleName,
+                FunctionName = function,
+                Code = code?.Left(100),
+                Message = exc.Message?.Left(250),
+                StackTrace = exc.ToString(),
+                Note = note,
+                IpAddress = HttpContext.Current.Request.GetUserHostAddress(),
+                SessionID = HttpContext.Current.Session?.SessionID,
+                MachineName = Environment.MachineName
+            };
 
-            var errorLog = repo.Create();
-            errorLog.Module = moduleName;
-            errorLog.FunctionName = function;
-            errorLog.Code = code?.Left(100);
-            errorLog.Message = exc.Message?.Left(250);
-            errorLog.StackTrace = exc.ToString();
-            errorLog.Note = note;
-            errorLog.IpAddress = HttpContext.Current.Request.GetUserHostAddress();
-            errorLog.SessionID = HttpContext.Current.Session?.SessionID;
-            errorLog.MachineName = Environment.MachineName;
-
-            InsertEntity(errorLog);
+            Add(errorLog);
         }
     }
 }

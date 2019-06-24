@@ -10,7 +10,6 @@ D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Arwend.Web.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Arwend.Web.View.Mvc.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\AutoMapper.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Data.dll
-D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Data.Entity.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Domain.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Itenso.TimePeriod.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Microsoft.Web.Infrastructure.dll
@@ -31,8 +30,6 @@ D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Arwend.Web.pdb
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Arwend.Web.dll.config
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Arwend.pdb
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Arwend.dll.config
-D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Data.Entity.pdb
-D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Data.Entity.dll.config
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Data.pdb
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Domain.pdb
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Domain.dll.config
@@ -51,3 +48,4 @@ D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\EntityFramework.
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\obj\Debug\Dalowe.View.Web.Framework.csproj.CopyComplete
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\obj\Debug\Dalowe.View.Web.Framework.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\obj\Debug\Dalowe.View.Web.Framework.pdb
+D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Framework\bin\Debug\Dalowe.Data.dll.config

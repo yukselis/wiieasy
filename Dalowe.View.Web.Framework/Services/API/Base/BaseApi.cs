@@ -1,15 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
-using System.Reflection;
-using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Text.RegularExpressions;
-using Dalowe.Data;
-using Dalowe.Data.Entity;
+using Arwend;
+using Dalowe.Data.Infrastructure;
 using Dalowe.Domain.Base;
-using Dalowe.Domain.Visa;
 
 namespace Dalowe.View.Web.Framework.Services.API.Base
 {
@@ -39,70 +38,71 @@ namespace Dalowe.View.Web.Framework.Services.API.Base
             }
         }
 
-        private Type GetRealType(Type type)
+        protected UnitOfWork DbTransaction(bool autoDetectChangesEnabled = true)
         {
-            return typeof(RepositoryFactory).Assembly
-                .GetExportedTypes()
-                .Where(type.IsAssignableFrom)
-                .First(t => !t.IsAbstract && !t.IsInterface);
+            var connectionString = ConfigurationManager.GetParameter("ConnectionString");
+            var transaction = UnitOfWork.GetInstance(connectionString, autoDetectChangesEnabled);
+            return transaction;
         }
 
-        private IRepository<TEntity> GetProxyRepository<TEntity>(IRepository<TEntity> result) where TEntity : DbEntity
+        internal List<TEntity> GetAll<TEntity>(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "") where TEntity : DbEntity
         {
-            var type = GetRealType(result.GetType());
-
-            var proxiedRepositoryType = typeof(ProxyRepository<>).MakeGenericType(type);
-            var getUserFunc = new Func<User>(() => Client.CurrentUser);
-            var proxiedRepositoryArgs = new object[] { result, getUserFunc };
-
-            var proxyRepository = (RealProxy)proxiedRepositoryType.InvokeMember("Create", BindingFlags.InvokeMethod, null, null, proxiedRepositoryArgs);
-            return (IRepository<TEntity>)proxyRepository.GetTransparentProxy();
-        }
-
-        protected IRepository<TEntity> Repository<TEntity>() where TEntity : DbEntity
-        {
-            return GetProxyRepository(RepositoryFactory.Current.GetRepositoryFromEntity<TEntity>());
+            return DbTransaction().Repository<TEntity>().Get(filter, orderBy, includeProperties).ToList();
         }
 
         internal void Add<TEntity>(TEntity dbEntity) where TEntity : DbEntity
         {
-            var entity = dbEntity as Entity;
-            if (entity != null)
-                entity.UserModifiedID = Client.CurrentUser?.ID;
+            using (var transaction = DbTransaction())
+            {
+                if (dbEntity is Entity entity)
+                {
+                    entity.UserModifiedID = Client.CurrentUser?.ID;
+                    entity.DateModified = DateTime.Now;
+                }
 
-            dbEntity.UserCreatedID = Client.CurrentUser?.ID;
-            var repository = Repository<TEntity>();
-            repository.Add(dbEntity);
-            repository.SaveChanges();
+                dbEntity.UserCreatedID = Client.CurrentUser?.ID;
+                dbEntity.DateCreated = DateTime.Now;
+
+                var repository = transaction.Repository<TEntity>();
+                repository.Insert(dbEntity);
+            }
         }
 
         internal void Update<TEntity>(TEntity dbEntity) where TEntity : DbEntity
         {
-            var entity = dbEntity as Entity;
-            if (entity != null)
-                entity.UserModifiedID = Client.CurrentUser?.ID;
+            using (var transaction = DbTransaction())
+            {
+                if (dbEntity is Entity entity)
+                {
+                    entity.UserModifiedID = Client.CurrentUser?.ID;
+                    entity.DateModified = DateTime.Now;
+                }
 
-            dbEntity.UserCreatedID = Client.CurrentUser?.ID;
-            var repository = Repository<TEntity>();
-            repository.Update(dbEntity);
-            repository.SaveChanges();
+                var repository = transaction.Repository<TEntity>();
+                repository.Update(dbEntity);
+            }
         }
 
         internal void Delete<TEntity>(TEntity dbEntity) where TEntity : DbEntity
         {
-            var entity = dbEntity as Entity;
-            if (entity != null)
-                entity.UserModifiedID = Client.CurrentUser?.ID;
+            using (var transaction = DbTransaction())
+            {
+                if (dbEntity is Entity entity)
+                {
+                    entity.UserModifiedID = Client.CurrentUser?.ID;
+                    entity.DateModified = DateTime.Now;
+                }
 
-            dbEntity.UserCreatedID = Client.CurrentUser?.ID;
-            var repository = Repository<TEntity>();
-            repository.Delete(dbEntity);
-            repository.SaveChanges();
+                var repository = transaction.Repository<TEntity>();
+                repository.Delete(dbEntity);
+            }
         }
 
         public string GetResponse(string url)
         {
-            HttpWebRequest webRequest;
             var result = string.Empty;
             try
             {
@@ -111,15 +111,17 @@ namespace Dalowe.View.Web.Framework.Services.API.Base
                     url = "http://" + url;
                 if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 {
-                    webRequest = (HttpWebRequest)WebRequest.Create(new Uri(url));
+                    var webRequest = (HttpWebRequest) WebRequest.Create(new Uri(url));
                     webRequest.KeepAlive = false;
                     webRequest.UserAgent =
                         "Mozilla/5.0 (Windows; U; Windows NT 6.1; ru; rv:1.9.2.3) Gecko/20100401 Firefox/4.0 (.NET CLR 3.5.30729)";
                     webRequest.Accept = "text/html;";
-                    using (var response = (HttpWebResponse)webRequest.GetResponse())
+                    using (var response = (HttpWebResponse) webRequest.GetResponse())
                     {
                         if (response.StatusCode == HttpStatusCode.OK)
-                            using (var reader = new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException(), Encoding.GetEncoding("UTF-8")))
+                            using (var reader = new StreamReader(
+                                response.GetResponseStream() ?? throw new InvalidOperationException(),
+                                Encoding.GetEncoding("UTF-8")))
                             {
                                 result = reader.ReadToEnd();
                                 reader.Close();
@@ -135,53 +137,6 @@ namespace Dalowe.View.Web.Framework.Services.API.Base
             }
 
             return result;
-        }
-
-        public void SaveEntity<TEntity>(TEntity dbEntity, bool saveChanges = true) where TEntity : DbEntity
-        {
-            var datasource = Repository<TEntity>();
-            var item = datasource.First(e => e.ID == dbEntity.ID);
-            item = dbEntity;
-
-            var entity = item as Entity;
-            if (entity != null)
-                entity.UserModifiedID = Client.CurrentUser?.ID;
-
-            if (saveChanges)
-                datasource.SaveChanges();
-
-            RefreshContext();
-        }
-
-        public void DeleteEntity<TEntity>(TEntity entity) where TEntity : DbEntity
-        {
-            var datasource = Repository<TEntity>();
-            datasource.Delete(entity);
-            datasource.SaveChanges();
-            RefreshContext();
-        }
-
-        public TEntity InsertEntity<TEntity>(TEntity dbEntity) where TEntity : DbEntity
-        {
-            if (dbEntity.UserCreatedID == null)
-                dbEntity.UserCreatedID = Client.CurrentUser?.ID;
-
-            var entity = dbEntity as Entity;
-            if (entity != null)
-                entity.UserModifiedID = Client.CurrentUser?.ID;
-
-            dbEntity.DateCreated = DateTime.Now;
-
-            var datasource = Repository<TEntity>();
-            datasource.Add(dbEntity);
-            datasource.SaveChanges();
-            RefreshContext();
-            return dbEntity;
-        }
-
-        public void RefreshContext()
-        {
-            RepositoryFactory.Current.RefreshContext();
         }
 
         public string ToUrlSlug(string value)

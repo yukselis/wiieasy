@@ -1,5 +1,4 @@
-﻿using Dalowe.Data.Entity;
-using Dalowe.Domain.Base;
+﻿using Dalowe.Domain.Base;
 
 namespace Dalowe.View.Web.Framework.Services.API
 {

@@ -127,7 +127,7 @@ namespace Dalowe.View.Web.Console.Controllers
                     {
                         user.Name = model.Name;
                         user.Email = model.Email;
-                        Client.Services.API.Visa.SaveEntity(user);
+                        Client.Services.API.Visa.SaveUser(user);
                     }
                 }
                 catch

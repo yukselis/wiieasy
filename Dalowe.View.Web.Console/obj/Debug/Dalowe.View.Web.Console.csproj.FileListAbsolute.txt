@@ -85,7 +85,6 @@ D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\WebGrease.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Enyim.Caching.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\StackExchange.Redis.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Dalowe.Data.dll
-D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Dalowe.Data.Entity.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Arwend.Web.View.Mvc.pdb
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Arwend.Web.View.Mvc.dll.config
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Arwend.Web.pdb
@@ -122,8 +121,7 @@ D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Microsoft.CodeDom.Provid
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Enyim.Caching.xml
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\StackExchange.Redis.xml
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Dalowe.Data.pdb
-D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Dalowe.Data.Entity.pdb
-D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Dalowe.Data.Entity.dll.config
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\obj\Debug\Dalowe.View.Web.Console.csproj.CopyComplete
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\obj\Debug\Dalowe.View.Web.Console.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\obj\Debug\Dalowe.View.Web.Console.pdb
+D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Dalowe.Data.dll.config

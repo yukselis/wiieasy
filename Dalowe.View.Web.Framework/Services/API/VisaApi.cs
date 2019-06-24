@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Dalowe.Data.Entity;
-using Dalowe.Data.Visa;
 using Dalowe.Domain.Visa;
 using Dalowe.View.Web.Framework.Services.API.Base;
 
@@ -19,16 +16,18 @@ namespace Dalowe.View.Web.Framework.Services.API
 
         public void SaveUser(User user)
         {
-            var datasource = RepositoryFactory.Current.GetRepository<IUserRepository>();
-            var item = datasource.GetQuery().First(e => e.ID == user.ID);
-            item.Email = user.Email;
-            item.StatusID = user.StatusID;
-            item.Name = user.Name;
-            item.Password = user.Password;
-            datasource.SaveChanges();
-            RefreshContext();
+            Update(user);
         }
 
+        public void DeleteUser(User user)
+        {
+            Delete(user);
+        }
+
+        public void UpdateUser(User user)
+        {
+            Update(user);
+        }
         #endregion
 
         #region "ReadService Members"
@@ -37,16 +36,19 @@ namespace Dalowe.View.Web.Framework.Services.API
             string phoneNumber = "")
         {
             User user = null;
-            try
+
+            using (var transaction = DbTransaction())
             {
-                if (userId > 0)
-                    user = RepositoryFactory.Current.GetRepository<IUserRepository>().First(u => u.ID == userId, "Role", "Role.Permissions");
-                else
-                    user = RepositoryFactory.Current.GetRepository<IUserRepository>().First(u => u.Name == username, "Role", "Role.Permissions");
-            }
-            catch (Exception exc)
-            {
-                Facade.Log.CreateErrorLog(ModuleName, "GetUser", "", exc, "");
+                var repository = transaction.Repository<User>();
+
+                try
+                {
+                    user = userId > 0 ? repository.Find(u => u.ID == userId, "Role.Permissions") : repository.Find(u => u.Name == username, "Role.Permissions");
+                }
+                catch (Exception exc)
+                {
+                    Facade.Log.CreateErrorLog(ModuleName, "GetUser", "", exc, "");
+                }
             }
 
             return user;
@@ -57,7 +59,7 @@ namespace Dalowe.View.Web.Framework.Services.API
             List<User> users = null;
             try
             {
-                users = RepositoryFactory.Current.GetRepository<IUserRepository>().GetAll().ToList();
+                users = GetAll<User>();
             }
             catch (Exception exc)
             {
@@ -72,7 +74,7 @@ namespace Dalowe.View.Web.Framework.Services.API
             List<Role> roles = null;
             try
             {
-                roles = RepositoryFactory.Current.GetRepository<IRoleRepository>().GetAll().ToList();
+                roles = GetAll<Role>();
             }
             catch (Exception exc)
             {
@@ -87,7 +89,7 @@ namespace Dalowe.View.Web.Framework.Services.API
             List<Permission> permissions = null;
             try
             {
-                permissions = RepositoryFactory.Current.GetRepository<IPermissionrRepository>().GetAll().ToList();
+                permissions = GetAll<Permission>();
             }
             catch (Exception exc)
             {
@@ -103,8 +105,7 @@ namespace Dalowe.View.Web.Framework.Services.API
             try
             {
                 if (permissionId > 0)
-                    permission = RepositoryFactory.Current.GetRepository<IPermissionrRepository>()
-                        .Single(x => x.ID == permissionId);
+                    permission = DbTransaction().Repository<Permission>().Find(x => x.ID == permissionId);
             }
             catch (Exception exc)
             {
@@ -120,7 +121,7 @@ namespace Dalowe.View.Web.Framework.Services.API
             try
             {
                 if (roleId > 0)
-                    role = RepositoryFactory.Current.GetRepository<IRoleRepository>().Single(x => x.ID == roleId);
+                    role = DbTransaction().Repository<Role>().Find(x => x.ID == roleId);
             }
             catch (Exception exc)
             {

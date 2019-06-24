@@ -10,3 +10,6 @@ D:\Basics\Projelerim\Dalowe\Dalowe.Data\bin\Debug\EntityFramework.xml
 D:\Basics\Projelerim\Dalowe\Dalowe.Data\obj\Debug\Dalowe.Data.csproj.CopyComplete
 D:\Basics\Projelerim\Dalowe\Dalowe.Data\obj\Debug\Dalowe.Data.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.Data\obj\Debug\Dalowe.Data.pdb
+D:\Basics\Projelerim\Dalowe\Dalowe.Data\bin\Debug\Dalowe.Data.dll.config
+D:\Basics\Projelerim\Dalowe\Dalowe.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.Data\bin\Debug\EntityFramework.SqlServer.xml
