@@ -7,6 +7,7 @@ namespace Dalowe.View.Web.Framework.Services.API
         private AccountApi _oAccount;
         private LogApi _oLog;
         private VisaApi _oVisa;
+        private ManagementApi _oManagement;
         private NotificationApi _oNotificationApi;
 
         public Facade(Services.Facade services)
@@ -21,6 +22,8 @@ namespace Dalowe.View.Web.Framework.Services.API
         public LogApi Log => _oLog ?? (_oLog = new LogApi(this));
 
         public VisaApi Visa => _oVisa ?? (_oVisa = new VisaApi(this));
+
+        public ManagementApi Management => _oManagement ?? (_oManagement = new ManagementApi(this));
 
         public NotificationApi Notification => _oNotificationApi ?? (_oNotificationApi = new NotificationApi(this));
 

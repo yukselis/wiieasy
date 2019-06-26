@@ -125,3 +125,7 @@ D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\obj\Debug\Dalowe.View.Web.Co
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\obj\Debug\Dalowe.View.Web.Console.dll
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\obj\Debug\Dalowe.View.Web.Console.pdb
 D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\Dalowe.Data.dll.config
+D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\System.Web.Http.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\System.Web.Http.WebHost.dll
+D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\System.Web.Http.xml
+D:\Basics\Projelerim\Dalowe\Dalowe.View.Web.Console\bin\System.Web.Http.WebHost.xml

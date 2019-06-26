@@ -41,3 +41,4 @@ D:\Basics\Projelerim\Dalowe\Arwend\obj\Debug\Arwend.csproj.CoreCompileInputs.cac
 D:\Basics\Projelerim\Dalowe\Arwend\obj\Debug\Arwend.csproj.CopyComplete
 D:\Basics\Projelerim\Dalowe\Arwend\obj\Debug\Arwend.dll
 D:\Basics\Projelerim\Dalowe\Arwend\obj\Debug\Arwend.pdb
+D:\Basics\Projelerim\Dalowe\Arwend\obj\Debug\Arwend.csprojAssemblyReference.cache

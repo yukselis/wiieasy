@@ -60,6 +60,8 @@
     <Compile Include="Base\LogEntity.cs" />
     <Compile Include="Log\ActionLog.cs" />
     <Compile Include="Log\ErrorLog.cs" />
+    <Compile Include="Management\AccessNode.cs" />
+    <Compile Include="Management\Campaign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visa\Permission.cs" />
     <Compile Include="Visa\Role.cs" />

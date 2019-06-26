@@ -1,0 +1,33 @@
+﻿@using Arwend;
+@using Dalowe.View.Web.Framework.Helpers;
+@model Arwend.Web.View.Mvc.Models.Generics.GenericListModel<Dalowe.View.Web.Framework.Models.Management.AccessNodeModel>
+@{
+    string cdnUrl = ConfigurationManager.CdnUrl;
+    string version = ConfigurationManager.ApplicationVersion;
+}
+@section styles{
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/datatables/css/jquery.dataTables.css?@version">
+    <link type="text/css" rel="stylesheet" href="@(cdnUrl)vendors/datatables/css/dataTables.bootstrap.css?@version">
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.TableFor(m => Model.Items)
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.dataTables.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/dataTables.bootstrap.js?@version"></script>
+    <script src="@(cdnUrl)vendors/datatables/js/jquery.jeditable.js?@version"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var usersTable = $('#accessnode-list').dataTable({
+                "aoColumnDefs": [{ "aTargets": [0], "sWidth": "10%" }, { "aTargets": [6], "sWidth": "60px" }, { "aTargets": [6,7], "bSearchable": false, "bSortable": false, "sWidth": "77px" }],
+                "bAutoWidth": false
+            });
+            editingTables["AccessNode"] = usersTable;
+        });
+    </script>
+}

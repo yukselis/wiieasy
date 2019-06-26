@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using Dalowe.Domain.Log;
+using Dalowe.Domain.Management;
 using Dalowe.Domain.Visa;
 
 namespace Dalowe.Data.Infrastructure
@@ -10,7 +11,7 @@ namespace Dalowe.Data.Infrastructure
             : base( nameOrConnectionString ?? "name=DataContext")
         {
             //TODO: Her zaman drop etmemeli daha sonradan düzenlenecek.
-            Database.SetInitializer(new CreateDatabaseIfNotExists<DataContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataContext>());
         }
 
         public virtual DbSet<User> Users { get; set; }
@@ -22,6 +23,10 @@ namespace Dalowe.Data.Infrastructure
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
 
         public virtual DbSet<ActionLog> ActionLogs { get; set; }
+
+        public virtual DbSet<Campaign> Campaigns { get; set; }
+
+        public virtual DbSet<AccessNode> AccessNodes { get; set; }
 
         public new void SaveChanges()
         {

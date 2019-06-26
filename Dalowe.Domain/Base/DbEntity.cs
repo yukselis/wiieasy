@@ -16,8 +16,5 @@ namespace Dalowe.Domain.Base
         public DateTime DateCreated { get; set; }
 
         public long? UserCreatedID { get; set; }
-
-        [NotMapped]
-        public bool MapUserDetail { get; set; }
     }
 }

@@ -104,6 +104,8 @@
     <Compile Include="Models\Base\TypeModel.cs" />
     <Compile Include="Models\Base\ViewModel.cs" />
     <Compile Include="Models\Home\IndexModel.cs" />
+    <Compile Include="Models\Management\AccessNodeModel.cs" />
+    <Compile Include="Models\Management\CampaignModel.cs" />
     <Compile Include="Models\Visa\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\API\AccountApi.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Services\API\NotificationApi.cs" />
     <Compile Include="Services\API\VisaApi.cs" />
     <Compile Include="Services\Facade.cs" />
+    <Compile Include="Services\API\ManagementApi.cs" />
     <Compile Include="ViewModelFactory.cs" />
   </ItemGroup>
   <ItemGroup>

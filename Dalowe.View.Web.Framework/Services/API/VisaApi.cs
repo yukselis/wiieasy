@@ -16,7 +16,7 @@ namespace Dalowe.View.Web.Framework.Services.API
 
         public void SaveUser(User user)
         {
-            Update(user);
+            Add(user);
         }
 
         public void DeleteUser(User user)

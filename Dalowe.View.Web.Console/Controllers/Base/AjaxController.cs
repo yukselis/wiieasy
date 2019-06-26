@@ -58,6 +58,16 @@ namespace Dalowe.View.Web.Console.Controllers.Base
                         case "User":
                             DeleteUser(model.ID);
                             break;
+                        case "Campaign":
+                            var campaign = Client.Services.API.Management.GetCampaign(model.ID);
+                            if (campaign != null)
+                                Client.Services.API.Management.DeleteCampaign(campaign);
+                            break;
+                        case "AccessNode":
+                            var accessNode = Client.Services.API.Management.GetAccessNode(model.ID);
+                            if (accessNode != null)
+                                Client.Services.API.Management.DeleteAccessNode(accessNode);
+                            break;
                         default:
                             break;
                     }
